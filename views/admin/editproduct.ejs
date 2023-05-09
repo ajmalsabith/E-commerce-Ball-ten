@@ -1,0 +1,178 @@
+<%-include('../../views/layoutes/headeradmin.ejs')%>
+
+
+<main class="h-full pb-16 overflow-y-auto">
+    <div class="container px-6 mx-auto grid">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            Add Products
+        </h2>
+
+        <div class="container">
+            <!-- General elements -->
+
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Name</span>
+                        <input required
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            type="text" name="name" value="<%= product.name %>" />
+                    </label>
+
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Price</span>
+                        <input
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            type="number" name="price" value="<%= product.price %>"  />
+
+                    </label>
+
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400"> category </span>
+                        <h3></h3>
+                        <select name="categoryname"
+                            
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                          
+                           <option value="<%=product.category%>"><%=product.category%></option>
+                            <% for(let i=0;i<category.length;i++){ %>
+                                <%  if(product.category!=category[i].name){ %>
+                                    <option  value="<%= category[i].name %>">
+                                        <%= category[i].name %>
+                                    </option>
+                                    <% } %>
+                                    <%}%>
+                                 
+                                    
+                           
+
+
+                        </select>
+                    </label>
+               <% for(let i=0;i<product.image.length;i++){  %>
+                    
+                        <span class="text-gray-700 dark:text-gray-400">Image</span>
+                       <a href="/admin/deleteimage?id=<%= product.image[i] %>&idpp=<%= product._id %> " style="background-color:red;" >DELETE<img style="width: 60px; height: 60px;" src="../img/<%= product.image[i] %>"
+                        alt=""></a>
+                   <%}%>
+
+                   <label class="block text-sm">
+                    <input accept="image/*"
+                            class="   block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            type="file" name="image" multiple value="<%= product.image %>" />
+                    </label>
+
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Discription</span>
+                        <input type="text" name="discription" value="<%= product.discription %>" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </label>
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">stock</span>
+                        <input
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            type="number" name="stock" value="<%= product.stock %>"  />
+
+                    </label>
+
+
+
+                    <br />
+                    <button type="submit"
+                        class="block w-50 px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        Add New Products
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <div class="container-fluid pt-4 px-4 ">
+            <div class="row g-4">
+                <div class="col-sm-12 col-xl-6 ">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <h6 class="mb-4">product edit</h6>
+                        <form method="post" enctype="multipart/form-data" >
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">product Name</label>
+                                <input type="text" name="name"  value="<%= product.name %>" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">
+                                </div>
+                            </div>
+    
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">price</label>
+                                <input type="number" name="price"  value="<%= product.price %>" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Categoryname</label>
+                                <select name="categoryname" id="">
+                                    <% for(let i=0;i<category.length;i++){ %>
+                                        <option  value="<%= category[i].name %>">
+                                            <%= category[i].name %>
+                                        </option>
+    
+                                        <% } %>
+                                </select>
+                                <div id="emailHelp" class="form-text">
+                                </div>
+                            </div>
+    
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Image</label>
+                                <input type="file" name="image"  value="<%= product.image %>" multiple data-max_length="20" class="form-control" id="exampleInputPassword1" accept="image/*">
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div><br>
+                           
+                           
+                        <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">discription</label>
+                                <input type="text" name="discription" value="<%= product.discription %>" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp">
+                                <div id="emailHelp" class="form-text">
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-primary" value="UPDATE">
+                        </form>
+                    </div>
+                </div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>

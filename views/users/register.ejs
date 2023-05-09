@@ -1,0 +1,188 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+  <title>Ball ten</title>
+  <link style="border-radius:50%;" rel="shortcut icon" href="https://www.pngitem.com/pimgs/m/55-559468_football-player-vector-png-clipart-png-download-football.png" type="image/png">
+ 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+  <div class="login-page">
+    <h1 style="text-align: center;" >register here</h1>
+   
+    <div class="form">
+  
+    
+      
+      <form class="login-form" method="post">
+        <input type="name" name="name" id="name" placeholder="name"/>
+        <span id="en1" style="color: red;"></span>
+        <input type="email" name="email" id="email" required placeholder="email"/>
+        <span id="en2" style="color: red;"></span>
+        <input type="number" name="phone" id="mobile" required placeholder="phone"/>
+        <span id="en3" style="color: red;"></span>
+        <input type="password" name="password" id="password" required placeholder="password"/>
+        <span id="en4" style="color: red;"></span><br>
+        
+   
+  <% if(typeof error !==  "undefined" ){ %>
+  
+    <span style="color: rgb(211, 22, 22);">
+      <%= error %>
+    </span>
+    <% } %>   
+    
+        <input type="submit" onclick="validate()" value="Login" required style="background-color: blue;"><br>
+        <p class="message">you have an account? <a href="/login">login here</a></p>
+      </form>
+    </div>
+  </div>
+  <style>
+    body{
+      background-image: url('https://watermark.lovepik.com/photo/40034/5516.jpg_wh1200.jpg');
+    }
+  .login-page {
+    width: 360px;
+    padding: 8% 0 0;
+    margin: auto;
+  }
+  .form {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  }
+  .form input {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  .form button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+  }
+  a:hover{
+    color: rgb(31, 94, 36);
+  }
+  
+  .form .message {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+  }
+  .form .message a {
+    color: #4CAF50;
+    text-decoration: none;
+  }
+  .form .register-form {
+    display: none;
+  }
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .container:before, .container:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  .container .info {
+    margin: 50px auto;
+    text-align: center;
+  }
+  .container .info h1 {
+    margin: 0 0 15px;
+    padding: 0;
+    font-size: 36px;
+    font-weight: 300;
+    color: #1a1a1a;
+  }
+  .container .info span {
+    color: #4d4d4d;
+    font-size: 12px;
+  }
+  .container .info span a {
+    color: #000000;
+    text-decoration: none;
+  }
+  .container .info span .fa {
+    color: #EF3B3A;
+  }
+  </style>
+  <script>
+    function validate(){
+       
+       name=document.getElementById('name').value
+       email=document.getElementById('email').value
+       mobile=document.getElementById('mobile').value
+       password=document.getElementById('password').value
+   
+       if(name==''){
+           document.getElementById('en1').innerText='please must fill name '
+       }
+       else{
+           document.getElementById("en1").innerText=""
+       }
+       if(email==''){
+           document.getElementById('en2').innerText='please must fill email '
+       }
+       else{
+           document.getElementById("en2").innerText=""
+       } if(mobile==''){
+           document.getElementById('en3').innerText='please must fill mobile number '
+       }
+       else{
+           document.getElementById("en3").innerText=""
+       } if(password==''){
+           document.getElementById('en4').innerText='please must fill password '
+       }
+       else{
+           document.getElementById("en4").innerText=""
+       }
+   
+      }
+  
+  
+  </script>
+  
+  
+   
+  <% if(typeof error !==  "undefined" ){ %>
+  
+    <span style="color: rgb(211, 22, 22);">
+      <%= error %>
+    </span>
+    <% } %>   
+    
+  
+</body>
+</html>
+

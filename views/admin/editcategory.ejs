@@ -1,0 +1,21 @@
+<%-include('../../views/layoutes/headeradmin.ejs')%>
+<form method="post">
+    <label class="block mt-4 text-sm">
+        <span class="text-gray-700 dark:text-gray-400"> category </span>
+
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label" style="color:azure" >Catagory Name</label>
+            <input type="text" name="category" value="<%= category.name %>" class="form-control" id="exampleInputEmail1"
+                aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">
+            </div>
+        </div>
+    </label>
+    <% if(typeof error !==  "undefined" ){ %>
+
+        <span style="color:red;">
+          <%= error %>
+        </span>
+        <% } %>            
+   <input  type="submit" style="background:blue;" value="EDIT" >
+</form>

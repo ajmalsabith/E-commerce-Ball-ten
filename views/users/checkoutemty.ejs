@@ -1,0 +1,308 @@
+<%- include('../layoutes/header.ejs') %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
+		<div class="breadcrumbs">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<p class="bread"><span><a href="index.html">Home</a></span> / <span>Checkout</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="colorlib-product">
+			<div class="container">
+				<div class="row row-pb-lg">
+					<div class="col-sm-10 offset-md-1">
+						<div class="process-wrap">
+							<div class="process text-center active">
+								<p><span>01</span></p>
+								<h3>Shopping Cart</h3>
+							</div>
+							<div class="process text-center active">
+								<p><span>02</span></p>
+								<h3>Checkout</h3>
+							</div>
+							<div class="process text-center">
+								<p><span>03</span></p>
+								<h3>Order Complete</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="container">
+				<a href="/addaddress"><button class="btn btn-info btn-lg"> Add new Address</button></a>
+			   </div >
+			   <div class="row " >
+					<div class="col-lg-4 md-6">
+						
+						<div class="row">
+							<div class="col-md-12">
+								<div class="cart-detail">
+									<h2>Cart Total</h2>
+									
+									<ul>
+										<li style="display: flex;"><h5>Order Total=</h5><h5 id="mt2"><%= total+45 %></h5></li>
+										<% cartdata.product.forEach((value)=>{ %>
+										<li>
+											
+											<ul>
+												<li><span><%= value.count %> x <%= value.name %></span> <span><%= value.price %></span></li>
+												<!-- <li><span>1 x Product Name</span> <span>$78.00</span></li> -->
+											</ul>
+										</li>
+										<%})%>
+										<li><span>Shipping</span> <span>45.00</span></li>
+										<li><span>discount</span> <span id="mt4">00</span></li>
+										<li><span>sub Total</span> <span id="mt2"><%= total %></span></li>
+									</ul>
+							
+								</div>
+						   </div>
+						   <div class="col-sm-8">
+							
+							<form >
+								<p>purchace 3000 add coupon</p>
+								<div class="row form-group">
+									<div class="col-sm-9">
+										<input type="text" name="coupon" id="coupon" class="form-control input-number">
+									</div>
+									<div class="col-sm-3">
+										<button type="button" onclick="applycoupon($('#coupon').val())" class="btn btn-primary">Apply</button>
+									</div>
+								</div>
+							</form>
+							
+						</div>
+
+						  
+
+						   <div class="col-md-12 ">
+								<div class="cart-detail">
+									<h2>Payment Method</h2>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" name="optradio"> Direct Bank Tranfer</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" name="optradio"> Check Payment</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" name="optradio"> Paypal</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="checkbox">
+											   <label><input type="checkbox" value=""> I have read and accept the terms and conditions</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+							<div class="">
+					<div class=" text-center ">
+						<p><a href="#" class="btn btn-primary">Place an order</a></p>
+					</div>
+				</div>
+		
+						
+					</div >
+				
+						<div class="col-md-8 ">
+						
+                            <% if(typeof error !=="undefined" ){ %>
+
+                                <span style="color:red;">
+                                  <%= error %>
+                                </span>
+                                <% } %>
+					
+						</div>
+						
+				   </div>
+
+					
+					
+				</div>
+			
+			</div>
+		</div>
+		
+
+		<footer id="colorlib-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-pb-md">
+					<div class="col footer-col colorlib-widget">
+						<h4>About Ballten</h4>
+						<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
+						<p>
+							<ul class="colorlib-social-icons">
+								<li><a href="#"><i class="icon-twitter"></i></a></li>
+								<li><a href="#"><i class="icon-facebook"></i></a></li>
+								<li><a href="#"><i class="icon-linkedin"></i></a></li>
+								<li><a href="#"><i class="icon-dribbble"></i></a></li>
+							</ul>
+						</p>
+					</div>
+					<div class="col footer-col colorlib-widget">
+						<h4>Customer Care</h4>
+						<p>
+							<ul class="colorlib-footer-links">
+								<li><a href="#">Contact</a></li>
+								<li><a href="#">Returns/Exchange</a></li>
+								<li><a href="#">Gift Voucher</a></li>
+								<li><a href="#">Wishlist</a></li>
+								<li><a href="#">Special</a></li>
+								<li><a href="#">Customer Services</a></li>
+								<li><a href="#">Site maps</a></li>
+							</ul>
+						</p>
+					</div>
+					<div class="col footer-col colorlib-widget">
+						<h4>Information</h4>
+						<p>
+							<ul class="colorlib-footer-links">
+								<li><a href="#">About us</a></li>
+								<li><a href="#">Delivery Information</a></li>
+								<li><a href="#">Privacy Policy</a></li>
+								<li><a href="#">Support</a></li>
+								<li><a href="#">Order Tracking</a></li>
+							</ul>
+						</p>
+					</div>
+
+					<div class="col footer-col">
+						<h4>News</h4>
+						<ul class="colorlib-footer-links">
+							<li><a href="blog.html">Blog</a></li>
+							<li><a href="#">Press</a></li>
+							<li><a href="#">Exhibitions</a></li>
+						</ul>
+					</div>
+
+					<div class="col footer-col">
+						<h4>Contact Information</h4>
+						<ul class="colorlib-footer-links">
+							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+							<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+							<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+							<li><a href="#">yoursite.com</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="copy">
+				<div class="row">
+					<div class="col-sm-12 text-center">
+						<p>
+							<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span> 
+							<span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+	</div>
+
+
+	<script>
+
+function applycoupon(coupon){
+
+	
+    $.ajax({
+      url:"/checkout",
+      data:{  
+        coupon:coupon 
+      },
+      method:"post",
+      success:(response)=>{
+       
+        if(response.user){
+          console.log("This User already used this coupon");
+          Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'This coupon already used!'
+              })
+        }else if(response.limit){
+          console.log("coupon limit exceeded");
+          Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'coupon limit exceeded!'
+              })
+        }else if(response.status){
+          console.log("This coupon now not in use");
+          Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'coupon limit exceeded!'
+              })
+        }else if(response.cartAmount){
+          console.log("You cant use the coupon...Buy more");
+          Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'You cant use the coupon...Buy more'
+              })
+        }else if(response.date){
+          console.log("coupon date expired");
+          Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'date expired!!!'
+              })
+        }else if(response.amountOkey){
+          console.log("discount granded");
+          document.getElementById('mt4').innerHTML = response.disAmount
+          document.getElementById('mt2').innerHTML = response.disTotal
+          console.log("done");
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Discount redeemed',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }else if(response.invalid){
+          console.log("invalid coupon");
+          Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Invalid Coupon!!!'
+              })
+        }
+      }
+    })
+  }
+
+
+
+
+
+	</script>
+	
+	<%- include('../layoutes/footer.ejs') %>

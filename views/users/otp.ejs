@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<title>Ball ten</title>
+	<link style="border-radius:50%;" rel="shortcut icon" href="https://www.pngitem.com/pimgs/m/55-559468_football-player-vector-png-clipart-png-download-football.png" type="image/png">
+   
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+	<style type="text/css">
+		
+		.card {
+			margin-top: 100px;
+			margin-bottom: 100px;
+			border: none;
+			box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+		}
+		#e2{
+			color: blue;
+		}
+		.card-header {
+			background-color: white;
+			border-bottom: none;
+			text-align: center;
+			font-weight: bold;
+		}
+		.card-body {
+			background-color: white;
+			border: none;
+		}
+		.btn-otp {
+			border-radius: 0;
+			background-color:blue;
+			color: white;
+			font-weight: bold;
+			border: none;
+		}
+		.btn-otp:hover {
+			background-color: #0e1c3a;
+			color: white;
+		}
+	</style>
+	<div class="container p-5" >
+		<div class="row">
+			<div class="col-md-4 offset-md-4">
+				<div class="card">
+					<div class="card-header">
+						<h4>Enter OTP</h4>
+					</div>
+					<div class="card-body">
+						<form method="post">
+							<div class="form-group">
+								<% if(typeof message !==  "undefined" ){ %>
+
+									<span style="color: rgb(211, 22, 22);">
+										<%= message %>
+									</span>
+									<% } %>
+								<br><label for="otp" id="e2">One-Time Password send it your email</label>
+								<input type="text" class="form-control" id="otp" name="otp" required><br>
+								<span id="en1" style="color: red;" ></span><br>
+								<p id="countdown-timer">OTP will expire in <span id="countdown">30</span> seconds.</p>
+							</div>
+							<input class="btn btn-otp btn-block" type="submit" onclick="validate()" value="verify">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	<script>
+                
+     	function validate(){
+
+			
+
+let otp = document.getElementById('otp').value
+
+
+if(otp == ''){
+	document.getElementById('en1').innerText='otp must fill'
+}else{
+	   document.getElementById('en1').innerText=''
+}
+
+	}
+
+    function changeP(){
+        const ptag = document.getElementById('msg')
+        ptag.innerText = ''
+    }
+
+
+    function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+var countdown = document.getElementById("countdown");
+var countdownTimer = document.getElementById("countdown-timer");
+
+startTimer(30, countdown);
+// Update timer element and display message when OTP expires
+function countdownExpired() {
+  countdownTimer.innerHTML = 'OTP has expired. Resend the OTP <a href="/resend">here</a>.';
+
+// Change the text color to red
+countdownTimer.style.color = "red";
+
+}
+
+setTimeout(countdownExpired, 30000);
+
+  
+
+
+	</script>
+
+
+	
+</body>
+</html>

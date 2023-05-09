@@ -1,0 +1,108 @@
+<%-include('../../views/layoutes/headeradmin.ejs')%>
+
+
+
+
+
+    <main class="h-full pb-16 overflow-y-auto">
+        <div class="container grid px-6 mx-auto">
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                <a href='#'> <button class="btn btn-danger">Add Products </button></a>
+            </h2>
+            <a style="float: right;" href="/admin/addcoupon"><button  class=" block w-50 px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                ADD NEW COUPON</button></a>
+
+
+            <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                <div class="w-full overflow-x-auto">
+                    <table class="w-full whitespace-no-wrap">
+                        <thead>
+                            <tr
+                                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                <th class="px-4 py-3">No</th>
+                                <th class="px-4 py-3">CouponName</th>
+                                <th class="px-4 py-3">discount</th>
+                                <th class="px-4 py-3">expireDate</th>
+                                <th class="px-4 py-3">cartAmount</th>
+                                <th class="px-4 py-3">limit</th>
+                                <th class="px-4 py-3">status</th>
+                                <th class="px-4 py-3">EDIT</th>
+                                <th class="px-4 py-3">DELETE</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                            <% for(let i=0;i<data.length;i++){ %>
+                                <tr class="text-gray-700 dark:text-gray-400">
+
+
+                                    <div>
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center text-sm">
+                                                <!-- Avatar with inset shadow -->
+
+                                                <div>
+                                                    <p class="font-semibold">
+                                                        <%= i+1 %>
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+
+                                    </div>
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center text-sm">
+                                            <!-- Avatar with inset shadow -->
+
+                                            <div>
+                                                <p class="font-semibold">
+                                                    <%= data[i].couponcode %>
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm ">
+
+                                        <%= data[i].discount%>
+
+
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <%= data[i].expiredate.toISOString().substring(0,10)%>
+                                    </td>
+
+                                    <td class="px-4 py-3 text-sm">
+                                        <%= data[i].purchaceamount%>
+                                    </td>
+
+                                   
+                                    <td class="px-4 py-3 text-sm">
+                                        <%= data[i].limit%>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <%= data[i].status%>
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center space-x-4 text-sm">
+                                            <a href="/admin/editcoupon?id=<%= data[i]._id %>"><button
+                                                    style="background:green;">EDITE</button> </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center space-x-4 text-sm">
+                                            <a href="/admin/deleteco?id=<%= data[i]._id %>"><button
+                                                    style="background:red;">DELETE</button></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <%}%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+

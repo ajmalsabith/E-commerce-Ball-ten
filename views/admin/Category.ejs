@@ -1,0 +1,162 @@
+<%-include('../../views/layoutes/headeradmin.ejs')%>
+
+<main class="h-full pb-16 overflow-y-auto">
+    <div class="container grid px-6 mx-auto">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            <a href=""> <button class="btn btn-danger">CATEGORY  </button></a>
+        </h2>
+        <a href="/admin/addCategory"><button
+                style="float:right;background-color:blue; color: rgb(255, 255, 255);">ADD NEW CATEGORY</button></a>
+
+        <!-- With avatar -->
+        <!-- With actions -->
+
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr
+                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3">No</th>                          
+                            <th class="px-4 py-3">Category</th>
+                            <th class="px-4 py-3">EDIT</th>
+                          
+
+
+
+
+                        </tr>
+                    </thead>
+
+
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        <% for(let i=0;i<category.length;i++){ %>
+
+
+
+
+
+
+
+
+
+
+                            <tr class="text-gray-700 dark:text-gray-400">
+
+
+                               
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center text-sm">
+                                            <!-- Avatar with inset shadow -->
+
+                                            <div>
+                                                <p class="font-semibold">
+                                                    <%= i+1 %>
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+                                <td class="px-4 py-3 text-sm">
+                                    <%= category[i].name%>
+                                </td>
+
+                                
+                                <td>
+                                    <div class="flex items-center space-x-4 text-sm">
+                                        <a href="/admin/editcategory?id=<%= category[i]._id %>"><button
+                                                style="background:green;">EDITE</button> </a>
+                                    </div>
+                                </td>
+                             
+                            </tr>
+
+
+
+
+
+
+
+
+
+                            <%}%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4 m-3">
+        <h6 class="mb-4">Catagory Management</h6>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">no</th>
+                        <th scope="col"> Name</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <a href="/admin/addCategory"><button class="btn btn-success float-right">ADD NEW CATEGORY</button></a>
+                <tbody>
+                    <% for(let i=0;i<category.length;i++){  %>
+                    <tr>
+                        <td><%= i+1 %> </td>
+                        <td> <%= category[i].name %> </td>
+                        <td>
+                            <a href="/admin/editcategory?id=<%= category[i]._id %> "><button class="btn btn-success" >EDIT</button></a>
+                        </td>
+                        <td>
+                            <a href="/admin/deletecategory?id=<%= category[i]._id %> "><button class="btn btn-danger" >DELETE</button></a>
+                        </td>
+                        
+                        
+                    </tr>
+                <% } %>
+                </tbody>
+               
+            </table>
+        </div>
+    </div>
+</div>
+      -->

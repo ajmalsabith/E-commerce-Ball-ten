@@ -1,0 +1,181 @@
+<%-include('../../views/layoutes/headeradmin.ejs')%>
+
+
+
+
+
+    <main class="h-full pb-16 overflow-y-auto">
+        <div class="container grid px-6 mx-auto">
+            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                <a href="./add_products"> <button class="btn btn-danger">Add Products </button></a>
+            </h2>
+            <a href="/admin/addproduct"><button
+                    style="float:right;background-color:blue; color: rgb(255, 255, 255);">ADD NEW PRODUCT</button></a>
+
+            <!-- With avatar -->
+            <!-- With actions -->
+
+            <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                <div class="w-full overflow-x-auto">
+                    <table class="w-full whitespace-no-wrap">
+                        <thead>
+                            <tr
+                                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                <th class="px-4 py-3">No</th>
+                                <th class="px-4 py-3">Name</th>
+                                <th class="px-4 py-3">Price</th>
+                                <th class="px-4 py-3">Category</th>
+                                <th class="px-4 py-3">Image</th>
+                                <th class="px-4 py-3">stock</th>
+                                <th class="px-4 py-3">status</th>
+                                <th class="px-4 py-3">EDIT</th>
+                                <th class="px-4 py-3">DELETE</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                            <% for(let i=0;i<product.length;i++){ %>
+                                <tr class="text-gray-700 dark:text-gray-400">
+
+
+                                    <div>
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center text-sm">
+                                                <!-- Avatar with inset shadow -->
+
+                                                <div>
+                                                    <p class="font-semibold">
+                                                        <%= i+1 %>
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+
+                                    </div>
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center text-sm">
+                                            <!-- Avatar with inset shadow -->
+
+                                            <div>
+                                                <p class="font-semibold">
+                                                    <%= product[i].name %>
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm ">
+
+                                        <%= product[i].price%>
+
+
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <%= product[i].category%>
+                                    </td>
+
+                                    <td class="px-4 py-3 text-xs">
+                                        <img style="width: 60px; height: 60px;" src="../img/<%= product[i].image[0] %>"
+                                            alt="">
+
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <%= product[i].stock%>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <%= product[i].is_block%>
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center space-x-4 text-sm">
+                                            <a href="/admin/productedit?id=<%= product[i]._id %>"><button
+                                                    style="background:green;">EDITE</button> </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center space-x-4 text-sm">
+                                            <a href="/admin/productdelete?id=<%= product[i]._id %>"><button
+                                                    style="background:red;">DELETE</button></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <%}%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4 m-3">
+        <h6 class="mb-4">product Management</h6>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">no</th>
+                        <th scope="col"> Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">category</th>
+                        <th scope="col">image</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <a href="/admin/addproduct"><button class="btn btn-success float-right">ADD NEW Product</button></a>
+                <tbody>
+                    <% for(let i=0;i<product.length;i++){ %>
+                    <tr>
+
+                        <td><%= i+1 %></td>
+                        <td><%= product[i].name %></td>
+                        <td><%= product[i].price %></td>
+                        <td><%= product[i].category %></td>
+                        <td>
+                            <img style="width: 60px; height: 60px;" src="../img/<%= product[i].image[0] %>" alt="">
+                            
+                            
+                           </td>
+                        
+                        <td>
+                            <a href="/admin/productedit?id=<%= product[i]._id %>"><button class="btn btn-success" >EDIT</button></a>
+                        </td  >
+                        <td>
+                            <a href="/admin/productdelete?id=<%= product[i]._id %>"><button class="btn btn-danger">DELETE</button></a>
+                        </td>
+
+                    </tr>
+                    <% } %>
+                </tbody>
+               
+            </table>
+        </div>
+    </div>
+</div>
+      -->

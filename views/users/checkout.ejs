@@ -1,0 +1,568 @@
+<%- include('../layoutes/header.ejs') %>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<p class="bread"><span><a href="index.html">Home</a></span> / <span>Checkout</span></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="colorlib-product">
+		<div class="container">
+
+			<div class="row row-pb-lg">
+				<div class="col-sm-10 offset-md-1">
+					<div class="process-wrap">
+						<div class="process text-center active">
+							<p><span>01</span></p>
+							<h3>Shopping Cart</h3>
+						</div>
+						<div class="process text-center active">
+							<p><span>02</span></p>
+							<h3>Checkout</h3>
+						</div>
+						<div class="process text-center">
+							<p><span>03</span></p>
+							<h3>Order Complete</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="">
+				
+				<div class="col-sm-8 ">
+
+					<form>
+						<p>purchace 3000 add coupon</p>
+
+						<div class="card " style="width: 18rem;">
+							<img src="img/discount-ribbon-banner-icon-for-graphic-design-logo-website-social-media-mobile-app-ui-illustration-vector.jpg" class="card-img-top" alt="">
+							
+						  </div>
+					
+					</form>
+
+				</div>
+
+
+			</div> -->
+			<a class="float-right" href="/addaddress"><button class="btn btn-info btn-sm"> Add new Address</button></a>
+
+			<div class="" style="display: flex;">
+
+				<input type="text" class="bg-warning" name="coupon" id="coupon" placeholder="enter coupon code......"
+					class="form-control input-number">
+
+
+				<button type="button" style="height:44px;" onclick="applycoupon($('#coupon').val())"
+					class="btn btn-dark">Apply</button>
+				<button onclick="returncoupon()" class="btn btn-danger"><i class="bi bi-x-lg bg-danger"></i>
+				</button>
+
+			</div>
+
+
+			<form id="checkout">
+
+				<div class="row ">
+
+					<div class="col-lg-4 md-6">
+
+						<div class="row">
+							<div class="col-md-12">
+								<div class="cart-detail">
+									
+										
+
+											<ul>
+												<% cartdata.product.forEach((value)=>{ %>
+												<li><span><%= value.count %> x <%= value.name %></span>
+														
+													<span><%= value.price %></span> 
+														
+												</li>
+												
+												<%})%>
+												<li><span>cart Total</span>
+													<span ><%= total %></span>
+												</li>
+											</ul>
+											
+										
+										
+										
+								</div>
+							</div>
+                         <% if(total>userdata.wallet){ %>
+							<div class="col-md-12">
+								<div class="cart-detail">
+									 
+									<input type="hidden" id="mt33" value="<%= total %>">
+									<input type="hidden" id="mt34" value="<%= total- userdata.wallet %>">
+									<ul>
+										<input type="hidden" id="mt22" value="<%= total %>">
+										<li><span>sub total</span> <span id="mt16"><%= total %></span></li>
+										<li><span>Shipping</span> <span>00</span></li>
+										<li><span>discount</span> <span id="mt4">00</span></li>
+										<li><span>wallet</span> <span>
+												<%=userdata.wallet%>
+											</span></li>
+										
+										<li><span>Amount To Be Paid</span><span id="mt2">
+												<%=  total- userdata.wallet %>
+											</span></li>
+											<input type="hidden" id="mt7" value="<%=  total- userdata.wallet %>">
+											<input type="hidden" id="mt21" value="<%= total- userdata.wallet %>">
+											<input type="hidden" id="mt45" value="<%= total %>">
+											
+
+									</ul>
+
+								</div>
+							</div>
+						 <%}else{%>
+							<div class="col-md-12">
+								<div class="cart-detail">
+									<input type="hidden" id="mt33" value="<%= total %>">
+									<input type="hidden" id="mt34" value="<%= total %>">
+
+									<ul>
+										
+										<input type="hidden" id="mt22" value="<%= total %>">
+										<li><span>sub total</span> <span id="mt16"><%= total %></span></li>
+										<li><span>Shipping</span> <span>45.00</span></li>
+										<li><span>discount</span> <span id="mt4">00</span></li>
+										<li><span>wallet</span> <span>
+												<%= userdata.wallet %>
+											</span></li>
+										
+										<li><span>Used From Wallet</span><span id="mt2">
+												<%=total %>
+											</span></li>
+											<input type="hidden" id="mt7" value="<%= total %>">
+											<input type="hidden" id="mt21" value="<%= total %>">
+											<input type="hidden" id="mt45" value="<%= total %>">
+									</ul>
+
+								</div>
+							</div>
+
+						 <%}%>
+						<% if(total>userdata.wallet){%>
+
+							<div class="col-md-12 ">
+								<div class="cart-detail">
+									<h2>Payment Method</h2>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+												<label><input type="radio" value="online" name="peyment" required>online
+													peyment</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+												<label><input type="radio" value="cod" name="peyment" required>Cash On
+													Delivery</label>
+											</div>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="checkbox">
+												<label><input type="checkbox" value=""> I have read and accept the terms
+													and conditions</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="">
+									<div class=" text-center ">
+										<input type="submit" class="btn btn-info btn-md" value="Place Order">
+									</div>
+								</div>
+
+							</div>
+
+						 <%}else{%>
+                             <input type="hidden" name="peyment" value="wallet">
+							 <div class="">
+								<div class=" text-center ">
+									<input type="submit" class="btn btn-info btn-md" value="Place Order">
+								</div>
+							</div>
+						 <%}%>
+						</div>
+
+
+
+					</div>
+
+					<div class="col-md-8 ">
+
+						<% data.address.forEach((value,index)=>{ %>
+							<div class="cart-detail row ">
+
+								<label for="radio">
+									<input type="radio" name="address" id=""
+										value="<%=value.fname %><%=value.lname %>,<%=value.address %> " required>
+									<%=value.fname %>
+										<%=value.lname %> <br>
+											<%=value.place %> <br>
+												<%=value.phone %> <br>
+													<%=value.address %> <br>
+														<%=value.pincode %> <br>
+
+								</label>
+								<div style="display: flex;">
+									<div class="col-md-4">
+										<a class="btn btn-danger" href="/deleteaddcheck?id=<%= value._id %>">DELETE</a>
+										<a href="/editadd?id=<%= value._id %>&index=<%=index%>"
+											class="btn btn-info">EDIT</a>
+									</div>
+								</div>
+							</div>
+							<%})%>`
+					</div>
+
+				</div>
+
+			</form>
+
+
+
+
+		</div>
+
+
+
+	</div>
+
+	<footer id="colorlib-footer" role="contentinfo">
+		<div class="container">
+			<div class="row row-pb-md">
+				<div class="col footer-col colorlib-widget">
+					<h4>About Ballten</h4>
+					<p>Even the all-powerful Pointing has no control about the blind texts it is an almost
+						unorthographic life</p>
+					<p>
+					<ul class="colorlib-social-icons">
+						<li><a href="#"><i class="icon-twitter"></i></a></li>
+						<li><a href="#"><i class="icon-facebook"></i></a></li>
+						<li><a href="#"><i class="icon-linkedin"></i></a></li>
+						<li><a href="#"><i class="icon-dribbble"></i></a></li>
+					</ul>
+					</p>
+				</div>
+				<div class="col footer-col colorlib-widget">
+					<h4>Customer Care</h4>
+					<p>
+					<ul class="colorlib-footer-links">
+						<li><a href="#">Contact</a></li>
+						<li><a href="#">Returns/Exchange</a></li>
+						<li><a href="#">Gift Voucher</a></li>
+						<li><a href="#">Wishlist</a></li>
+						<li><a href="#">Special</a></li>
+						<li><a href="#">Customer Services</a></li>
+						<li><a href="#">Site maps</a></li>
+					</ul>
+					</p>
+				</div>
+				<div class="col footer-col colorlib-widget">
+					<h4>Information</h4>
+					<p>
+					<ul class="colorlib-footer-links">
+						<li><a href="#">About us</a></li>
+						<li><a href="#">Delivery Information</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Support</a></li>
+						<li><a href="#">Order Tracking</a></li>
+					</ul>
+					</p>
+				</div>
+
+				<div class="col footer-col">
+					<h4>News</h4>
+					<ul class="colorlib-footer-links">
+						<li><a href="blog.html">Blog</a></li>
+						<li><a href="#">Press</a></li>
+						<li><a href="#">Exhibitions</a></li>
+					</ul>
+				</div>
+
+				<div class="col footer-col">
+					<h4>Contact Information</h4>
+					<ul class="colorlib-footer-links">
+						<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+						<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+						<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+						<li><a href="#">yoursite.com</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="copy">
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<p>
+						<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							<script>document.write(new Date().getFullYear());</script> All rights reserved | This
+							template is made with <i class="icon-heart" aria-hidden="true"></i> by <a
+								href="https://colorlib.com" target="_blank">Colorlib</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</span>
+						<span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a
+								href="http://pexels.com/" target="_blank">Pexels.com</a></span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+	</div>
+
+
+	<script>
+
+		function applycoupon(coupon) {
+        const amount=document.getElementById('mt21').value
+		const carttotal=document.getElementById('mt22').value
+
+
+		
+      
+			$.ajax({
+				url: "/checkout1",
+				data: {
+					amount:amount,
+					coupon: coupon,
+					carttotal:carttotal
+				
+				},
+				method: "post",
+				success: (response) => {
+
+					if (response.user) {
+						console.log("This User already used this coupon");
+						Swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'This coupon already used!'
+						})
+					} else if (response.limit) {
+						console.log("coupon limit exceeded");
+						Swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'coupon limit exceeded!'
+						})
+					} else if (response.status) {
+						console.log("This coupon now not in use");
+						Swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'coupon limit exceeded!'
+						})
+					} else if (response.cartAmount) {
+						console.log("You cant use the coupon...Buy more");
+						Swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'You cant use the coupon...Buy more'
+						})
+					} else if (response.date) {
+						console.log("coupon date expired");
+						Swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'date expired!!!'
+						})
+					} else if (response.amountOkey) {
+						console.log("discount granded");
+						document.getElementById('mt4').innerHTML = response.disAmount
+						document.getElementById('mt2').innerHTML = response.disTotal
+					    document.getElementById('mt16').innerHTML =response.totalorder
+						document.getElementById('mt7').value = response.disTotal
+
+
+						console.log("done");
+						Swal.fire({
+							position: 'center',
+							icon: 'success',
+							title: 'Discount redeemed',
+							showConfirmButton: false,
+							timer: 1500
+						})
+					} else if (response.invalid) {
+						console.log("invalid coupon");
+						Swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'Invalid Coupon!!!'
+						})
+					}
+				}
+			})
+		}
+
+
+
+
+
+	</script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+	<script>
+
+		$("#checkout").submit((e) => {
+		
+			const amount = document.getElementById("mt7").value
+			const totalamount = document.getElementById("mt16").value
+			const seconde = document.getElementById("mt45").value
+			
+			
+			console.log("hiii");
+			console.log(totalamount);
+			// const amount2 = document.getElementById("gt2").innerHTML;
+			// const discount = document.getElementById("gt3").innerHTML;
+			let address = $("input[name=address]:checked").val();
+			let payment = $("input[name=peyment]:checked").val();
+
+			e.preventDefault();
+
+			$.ajax({
+				url: "/checkout",
+				method: "post",
+				data: {
+					amount:amount,
+					address: address,
+					peyment: payment,
+					totalamount:totalamount,
+					seconde
+				
+				},
+				success: (response) => {
+					if (response.codesuccess) {
+						location.href = "/order";
+					} else {
+						razorpayPayment(response.order);
+					}
+				}
+			})
+
+		})
+
+
+
+		function razorpayPayment(order) {
+
+			var options = {
+				"key": "rzp_test_kxOSBe5h7349QI", // Enter the Key ID generated from the Dashboard
+				"amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+				"currency": "INR",
+				"name": "TZ watches", //your business name
+				"description": "Test Transaction",
+				"image": "https://example.com/your_logo",
+				"order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+				"handler": function (response) {
+					verifyPayment(response, order);
+				},
+				"prefill": {
+					"name": "Gaurav Kumar", //your customer's name
+					"email": "gaurav.kumar@example.com",
+					"contact": "9000090000"
+				},
+				"notes": {
+					"address": "Razorpay Corporate Office"
+				},
+				"theme": {
+					"color": "#3399cc"
+				}
+			};
+			var rzp1 = new Razorpay(options);
+			rzp1.open();
+		}
+		function verifyPayment(payment, order) {
+			const amount = document.getElementById("mt7").value;
+			console.log(amount+'ajmalsabith');
+		
+			const totalamount = document.getElementById("mt16").value
+			$.ajax({
+				url: "/verifypayment",
+				method: "post",
+				data: {
+
+					amount,
+					order,
+					payment,
+					totalamount
+					
+
+
+				},
+				success: (response) => {
+					console.log('haloo11');
+					if (response.peymentsuccess) {
+						location.href = '/order'
+					} else {
+						alert('payment failed');
+						location.href = '/home'
+					}
+				}
+
+			})
+		}
+
+
+		function returncoupon() {
+			console.log('1000aj');
+
+			const totalamount = document.getElementById("mt33").value
+			const paidamount = document.getElementById("mt34").value
+  
+			$.ajax({
+				url: "/returncoupon",
+				method: "post",
+				data:{
+					totalamount,
+					paidamount
+				},
+
+				success: (response) => {
+					console.log('2000p');
+					document.getElementById('mt4').innerHTML = '00'
+					document.getElementById('mt2').innerHTML = response.paidamount				
+					document.getElementById('mt7').value = response.paidamount
+					document.getElementById('mt16').innerHTML = response.totalamount					
+					document.getElementById('mt22').value = response.totalamount
+					Swal.fire({
+						icon: 'success',
+						title: 'returned coupon',
+						showConfirmButton: false,
+						timer: 1500
+					})
+
+				}
+
+			})
+
+		}
+	</script>
+	<%- include('../layoutes/footer.ejs') %>

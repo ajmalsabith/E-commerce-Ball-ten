@@ -1,0 +1,382 @@
+<%- include('../layoutes/header.ejs') %>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!------ Include the above in your HEAD tag ---------->
+
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<p class="bread"><span><a href="/home">Home</a></span> / <span>My Wishlist</span></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="colorlib-product">
+		<div class="container">
+
+			<div class="cart-wrap">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+
+							<div class="table-wishlist">
+								<table cellpadding="0" cellspacing="0" border="0" width="100%">
+									<thead>
+										<tr>
+											<th></th>
+											<th width="45%">Product Name</th>
+											<th width="15%">Unit Price</th>
+
+										</tr>
+									</thead>
+									<% for(let i=0;i<prodata.product.length;i++){ %>
+										<tbody>
+											<tr>
+
+												<td>
+													<div class="img-product">
+														<img style="width: 60px; height: 60px;"
+															src="../img/<%= prodata.product[i].productId.image[0] %>"
+															alt="">
+													</div>
+												</td>
+
+												<td width="45%">
+													<div class="display-flex align-center">
+
+														<div class="name-product">
+															<h5>
+																<%= prodata.product[i].name %>
+															</h5>
+														</div>
+													</div>
+												</td>
+												<td width="15%" class="price">
+													<h5>$<%= prodata.product[i].price %>
+													</h5>
+												</td>
+												<td width="15%"><a
+														href="/deletewish?id=<%= prodata.product[i].productId.id %>"><span
+															class="in-stock-box">remove product</span></a></td>
+												<td width="15%"><a
+														href="/addcart?id=<%= prodata.product[i].productId.id %>"><button
+															onclick="popup()" class="round-black-btn small-btn">Add to
+															Cart</button></a></td>
+												<td width="10%" class="text-center"><a href="#" class="trash-icon"><i
+															class="far fa-trash-alt"></i></a></td>
+											</tr>
+										</tbody>
+										<%}%>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-8 offset-sm-2 text-center colorlib-heading colorlib-heading-sm">
+					<h2>Shop more</h2>
+				</div>
+			</div>
+			<div class="row">
+				<% for(let i=0;i<4;i++){ %>
+					<div class="col-lg-3 mb-4 text-center">
+						<div class="product-entry border">
+							<a href="/product?id=<%= relproduct[i]._id %>" class="prod-img">
+								<img src="img/<%= relproduct[i].image[0] %>" class="img-fluid"
+									alt="Free html5 bootstrap 4 template">
+							</a>
+							<div class="desc">
+								<h2>
+									<%= relproduct[i].name %>
+								</h2>
+								<span class="price">
+									<%= relproduct[i].discription %>
+								</span>
+								<h2><a href="#"></a>$<%= relproduct[i].price %>
+								</h2>
+							</div>
+						</div>
+					</div>
+					<% } %>
+				
+			</div>
+		</div>
+	</div>
+
+	<footer id="colorlib-footer" role="contentinfo">
+		<div class="container">
+			<div class="row row-pb-md">
+				<div class="col footer-col colorlib-widget">
+					<h4>About Ballten</h4>
+					<p>Even the all-powerful Pointing has no control about the blind texts it is an almost
+						unorthographic life</p>
+					<p>
+					<ul class="colorlib-social-icons">
+						<li><a href="#"><i class="icon-twitter"></i></a></li>
+						<li><a href="#"><i class="icon-facebook"></i></a></li>
+						<li><a href="#"><i class="icon-linkedin"></i></a></li>
+						<li><a href="#"><i class="icon-dribbble"></i></a></li>
+					</ul>
+					</p>
+				</div>
+				<div class="col footer-col colorlib-widget">
+					<h4>Customer Care</h4>
+					<p>
+					<ul class="colorlib-footer-links">
+						<li><a href="#">Contact</a></li>
+						<li><a href="#">Returns/Exchange</a></li>
+						<li><a href="#">Gift Voucher</a></li>
+						<li><a href="#">Wishlist</a></li>
+						<li><a href="#">Special</a></li>
+						<li><a href="#">Customer Services</a></li>
+						<li><a href="#">Site maps</a></li>
+					</ul>
+					</p>
+				</div>
+				<div class="col footer-col colorlib-widget">
+					<h4>Information</h4>
+					<p>
+					<ul class="colorlib-footer-links">
+						<li><a href="#">About us</a></li>
+						<li><a href="#">Delivery Information</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Support</a></li>
+						<li><a href="#">Order Tracking</a></li>
+					</ul>
+					</p>
+				</div>
+
+				<div class="col footer-col">
+					<h4>News</h4>
+					<ul class="colorlib-footer-links">
+						<li><a href="blog.html">Blog</a></li>
+						<li><a href="#">Press</a></li>
+						<li><a href="#">Exhibitions</a></li>
+					</ul>
+				</div>
+
+				<div class="col footer-col">
+					<h4>Contact Information</h4>
+					<ul class="colorlib-footer-links">
+						<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+						<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+						<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+						<li><a href="#">yoursite.com</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="copy">
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<p>
+						<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							<script>document.write(new Date().getFullYear());</script> All rights reserved | This
+							template is made with <i class="icon-heart" aria-hidden="true"></i> by <a
+								href="https://colorlib.com" target="_blank">Colorlib</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</span>
+						<span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a
+								href="http://pexels.com/" target="_blank">Pexels.com</a></span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+	</div>
+	<style>
+		.cart-wrap {
+			padding: 40px 0;
+			font-family: 'Open Sans', sans-serif;
+		}
+
+		.main-heading {
+			font-size: 19px;
+			margin-bottom: 20px;
+		}
+
+		.table-wishlist table {
+			width: 100%;
+		}
+
+		.table-wishlist thead {
+			border-bottom: 1px solid #e5e5e5;
+			margin-bottom: 5px;
+		}
+
+		.table-wishlist thead tr th {
+			padding: 8px 0 18px;
+			color: #484848;
+			font-size: 15px;
+			font-weight: 400;
+		}
+
+		.table-wishlist tr td {
+			padding: 25px 0;
+			vertical-align: middle;
+		}
+
+		.table-wishlist tr td .img-product {
+			width: 72px;
+			float: left;
+			margin-left: 8px;
+			margin-right: 31px;
+			line-height: 63px;
+		}
+
+		.table-wishlist tr td .img-product img {
+			width: 100%;
+		}
+
+		.table-wishlist tr td .name-product {
+			font-size: 15px;
+			color: #484848;
+			padding-top: 8px;
+			line-height: 24px;
+			width: 50%;
+		}
+
+		.table-wishlist tr td.price {
+			font-weight: 600;
+		}
+
+		.table-wishlist tr td .quanlity {
+			position: relative;
+		}
+
+		.total {
+			font-size: 24px;
+			font-weight: 600;
+			color: #8660e9;
+		}
+
+		.display-flex {
+			display: flex;
+		}
+
+		.align-center {
+			align-items: center;
+		}
+
+		.round-black-btn {
+			border-radius: 25px;
+			background: #212529;
+			color: #fff;
+			padding: 5px 20px;
+			display: inline-block;
+			border: solid 2px #212529;
+			transition: all 0.5s ease-in-out 0s;
+			cursor: pointer;
+			font-size: 14px;
+		}
+
+		.round-black-btn:hover,
+		.round-black-btn:focus {
+			background: transparent;
+			color: #212529;
+			text-decoration: none;
+		}
+
+		.mb-10 {
+			margin-bottom: 10px !important;
+		}
+
+		.mt-30 {
+			margin-top: 30px !important;
+		}
+
+		.d-block {
+			display: block;
+		}
+
+		.custom-form label {
+			font-size: 14px;
+			line-height: 14px;
+		}
+
+		.pretty.p-default {
+			margin-bottom: 15px;
+		}
+
+		.pretty input:checked~.state.p-primary-o label:before,
+		.pretty.p-toggle .state.p-primary-o label:before {
+			border-color: #8660e9;
+		}
+
+		.pretty.p-default:not(.p-fill) input:checked~.state.p-primary-o label:after {
+			background-color: #8660e9 !important;
+		}
+
+		.main-heading.border-b {
+			border-bottom: solid 1px #ededed;
+			padding-bottom: 15px;
+			margin-bottom: 20px !important;
+		}
+
+		.custom-form .pretty .state label {
+			padding-left: 6px;
+		}
+
+		.custom-form .pretty .state label:before {
+			top: 1px;
+		}
+
+		.custom-form .pretty .state label:after {
+			top: 1px;
+		}
+
+		.custom-form .form-control {
+			font-size: 14px;
+			height: 38px;
+		}
+
+		.custom-form .form-control:focus {
+			box-shadow: none;
+		}
+
+		.custom-form textarea.form-control {
+			height: auto;
+		}
+
+		.mt-40 {
+			margin-top: 40px !important;
+		}
+
+		.in-stock-box {
+			background: #ff0000;
+			font-size: 12px;
+			text-align: center;
+			border-radius: 25px;
+			padding: 4px 15px;
+			display: inline-block;
+			color: #fff;
+		}
+
+		.trash-icon {
+			font-size: 20px;
+			color: #212529;
+		}
+	</style>
+	<script>
+		function popup() {
+			Swal.fire({
+				position: 'center',
+				icon: 'success',
+				title: 'product added at cart',
+				showConfirmButton: false,
+				timer: 1500
+			})
+		}
+	</script>
+	<%- include('../layoutes/footer.ejs') %>

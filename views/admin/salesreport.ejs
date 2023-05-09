@@ -1,0 +1,183 @@
+<%-include('../../views/layoutes/headeradmin.ejs')%>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Load the jQuery UI library from a CDN -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
+
+<main class="h-full pb-16 overflow-y-auto">
+    <div class="container grid px-6 mx-auto">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            <a href="#"> <button class="btn btn-danger">Sales report </button></a>
+        </h2>
+
+        <a href="/admin/download"><button style="float: right;"  class=" block w-50 px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+            download</button></a> 
+         
+
+        <form action="" method="post">
+           <div style="display: flex;">
+            <label style="color: antiquewhite;" for="start-date">Start:</label>
+            <input  placeholder="first date "  required class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" name="date1" type="text" id="start-date" fdprocessedid="h20ilr">
+            <label style="color: antiquewhite;" for="end-date">End:</label>
+            <input placeholder="end date" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" name="date2" type="text" id="end-date" fdprocessedid="h20ilr">
+            <div id="date-error" class="error"></div>
+            <input required type="submit" value="find" style="background-color: blanchedalmond;border-radius:5px;">
+           </div>
+           <% if(typeof message !==  "undefined" ){ %>
+
+            <span style="color: rgb(211, 22, 22);">
+              <%= message %>
+            </span>
+            <% } %>  
+
+        </form>
+
+
+       
+
+        <!-- With avatar -->
+        <!-- With actions -->
+
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr
+                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3">No</th>
+                            <th class="px-4 py-3">orderd id</th>
+                            <th class="px-4 py-3">Name</th>
+                            <th class="px-4 py-3">product-name&price</th>
+                            <th class="px-4 py-3">date</th>
+                            <th class="px-4 py-3">amount</th>                                     
+                            <th class="px-4 py-3">peyment method</th>
+                            <th class="px-4 py-3">status</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        <% for(let i=0;i<orders.length;i++){ %>
+                            <tr class="text-gray-700 dark:text-gray-400">
+
+
+                                <div>
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center text-sm">
+                                            <!-- Avatar with inset shadow -->
+
+                                            <div>
+                                                <p class="font-semibold">
+                                                    <%= i+1 %>
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+                                </div>
+                                <td class="px-4 py-3">
+                                    <div class="flex items-center text-sm">
+                                        <!-- Avatar with inset shadow -->
+
+                                        <div>
+                                            <p class="font-semibold">
+                                                <%= orders[i]._id %>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 text-sm ">
+
+                                    <%= orders[i].user%>
+
+
+                                </td>
+                               
+                                <td>
+                                  
+                                  <ul>
+                                    <ol>
+                                      <% for(let j=0;j<orders[i].product.length;j++){ %>
+                                        
+                                      <li><%=j+1%>-<%=orders[i].product[j].productId.name    %>:<%=orders[i].product[j].productId.price %> </li><br>
+                                      <% }%>
+                                    </ol>
+                                  </ul>
+                               
+                                </td>
+                              
+                                <td class="px-4 py-3 text-sm">
+                                    <%= orders[i].date.toISOString().substring(0,10)%>
+                                </td>
+
+                              
+                                <td class="px-4 py-3 text-sm">
+                                    <%= orders[i].totalamount%>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <%= orders[i].peymentMethod%>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <%= orders[i].status%>
+                                </td>
+                              
+                            </tr>
+                            <%}%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>    
+      $(function() {
+        // Initialize the start date picker
+        $('#start-date').datepicker({
+          dateFormat: 'yy-mm-dd',
+          beforeShow: function() {
+            // Get the currently selected end date
+            var endDate = $('#end-date').datepicker('getDate');
+            // If an end date has been selected, prevent selection of dates after it
+            if (endDate) {
+              return { maxDate: endDate };
+            }
+          },
+          onSelect: function(selectedDate) {
+            // When the start date is selected, check if it's after the end date
+            var startDate = $('#start-date').datepicker('getDate');
+            var endDate = $('#end-date').datepicker('getDate');
+            if (startDate && endDate && startDate > endDate) {
+              $('#date-error').text('Start date cannot be after end date');
+            } else {
+              $('#date-error').text('');
+              // When the start date is selected, update the end date picker
+              $('#end-date').datepicker('option', 'minDate', selectedDate);
+            }
+          }
+        });
+
+        // Initialize the end date picker
+        $('#end-date').datepicker({
+          dateFormat: 'yy-mm-dd',
+          onSelect: function(selectedDate) {
+            // When the end date is selected, check if it's before the start date
+            var startDate = $('#start-date').datepicker('getDate');
+            var endDate = $('#end-date').datepicker('getDate');
+            if (startDate && endDate && endDate < startDate) {
+              $('#date-error').text('End date cannot be before start date');
+            } else {
+              $('#date-error').text('');
+              // When the end date is selected, update the start date picker
+              $('#start-date').datepicker('option', 'maxDate', selectedDate);
+            }
+          }
+        });
+      });
+    </script>
+   
+</main>
+

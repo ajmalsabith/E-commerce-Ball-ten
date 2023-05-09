@@ -1,0 +1,197 @@
+<%- include('../layoutes/header.ejs') %>
+
+
+
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                    alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                                <h5 class="my-3"><%= data.name %></h5>
+                                <p class="text-muted mb-1"><%= data.email %></p>
+                                <p class="text-muted mb-4"><%= data.phone %></p>
+                                <div class="d-flex justify-content-center mb-2">
+                                    <button type="button" class="btn btn-primary">Follow</button>
+                                    <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                                </div><hr>
+                                <div class="justify-content-center">
+
+                                  <a href=""><span>order details</span></a> <hr>
+                                   <a href=""><span>order history</span></a> 
+
+                                </div>
+                                <hr>
+                                <h5 style="color:green">purchace 3000 get coupons </h5><hr>
+                                <% coupon.forEach((value)=>{ %>
+                                <div class="cart-detail " >
+                                    <div  class="">
+                                    <img style="height:80px;width:100px;" src="https://ecommerceguide.com/wp-content/uploads/2016/01/coupon-main.jpg" alt="">
+                                    <h3><%= value.couponcode %></h3>  
+                                    <h5>Expire-<%= value.expiredate.toISOString().substring(0,10)%></h5>                                
+                                   </div>
+                                  
+                                </div>
+                           <% })%>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Full Name</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0"><%= data.name %></p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Email</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0"><%= data.email %></p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Wallet</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0"><%= data.wallet %></p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Mobile No</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0"><%= data.phone %></p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 ">
+                            <div class="">
+                                <a href="/addaddress"><button class="btn btn-info btn-lg"> Add new Address</button></a>
+                               </div >
+                            <h6>order address</h6>
+							
+							
+						</div>
+                        
+                     
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="colorlib-footer" role="contentinfo">
+		<div class="container">
+			<div class="row row-pb-md">
+				<div class="col footer-col colorlib-widget">
+					<h4>About Ballten</h4>
+					<p>Even the all-powerful Pointing has no control about the blind texts it is an almost
+						unorthographic life</p>
+					<p>
+					<ul class="colorlib-social-icons">
+						<li><a href="#"><i class="icon-twitter"></i></a></li>
+						<li><a href="#"><i class="icon-facebook"></i></a></li>
+						<li><a href="#"><i class="icon-linkedin"></i></a></li>
+						<li><a href="#"><i class="icon-dribbble"></i></a></li>
+					</ul>
+					</p>
+				</div>
+				<div class="col footer-col colorlib-widget">
+					<h4>Customer Care</h4>
+					<p>
+					<ul class="colorlib-footer-links">
+						<li><a href="#">Contact</a></li>
+						<li><a href="#">Returns/Exchange</a></li>
+						<li><a href="#">Gift Voucher</a></li>
+						<li><a href="#">Wishlist</a></li>
+						<li><a href="#">Special</a></li>
+						<li><a href="#">Customer Services</a></li>
+						<li><a href="#">Site maps</a></li>
+					</ul>
+					</p>
+				</div>
+				<div class="col footer-col colorlib-widget">
+					<h4>Information</h4>
+					<p>
+					<ul class="colorlib-footer-links">
+						<li><a href="#">About us</a></li>
+						<li><a href="#">Delivery Information</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Support</a></li>
+						<li><a href="#">Order Tracking</a></li>
+					</ul>
+					</p>
+				</div>
+
+				<div class="col footer-col">
+					<h4>News</h4>
+					<ul class="colorlib-footer-links">
+						<li><a href="blog.html">Blog</a></li>
+						<li><a href="#">Press</a></li>
+						<li><a href="#">Exhibitions</a></li>
+					</ul>
+				</div>
+
+				<div class="col footer-col">
+					<h4>Contact Information</h4>
+					<ul class="colorlib-footer-links">
+						<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+						<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+						<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+						<li><a href="#">yoursite.com</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="copy">
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<p>
+						<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							<script>document.write(new Date().getFullYear());</script> All rights reserved | This
+							template is made with <i class="icon-heart" aria-hidden="true"></i> by <a
+								href="https://colorlib.com" target="_blank">Colorlib</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</span>
+						<span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a
+								href="http://pexels.com/" target="_blank">Pexels.com</a></span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+
+    <%- include('../layoutes/footer.ejs') %>

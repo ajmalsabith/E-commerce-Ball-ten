@@ -1,0 +1,534 @@
+<%- include('../layoutes/header.ejs') %>
+
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<p class="bread"><span><a href="/home">Home</a></span> / <span>Product Details</span></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="colorlib-product">
+		<div class="container">
+			<div class="row row-pb-lg product-detail-wrap">
+
+				<div class="col-md-4">
+					<div class="owl-carousel">
+						<% if(Data.image.length>0){
+							for(let i=0 ; i<Data.image.length;i++){ %>
+
+
+
+								<div class="item">
+									<div class="product-entry border image-zoom-container">
+										<a href="#" class="prod-img  ">
+											<img src="img/<%= Data.image[i] %>" class="img-fluid image-zoom"
+												alt="image">
+										</a>
+									</div>
+								</div>
+
+                            <%}%>
+
+					<% } %>
+					</div>
+
+				</div>
+
+				<div class="col-md-8">
+					<div class="product-desc">
+						<h2>
+							<%= Data.name %>
+						</h2>
+						<p class="price">
+						<h3 style="color:green;">$<%= Data.price %>
+						</h3>
+
+
+						</p>
+						<p>
+						<h4>
+							<%= Data.discription %>
+						</h4>
+						<br>
+						<div class="row">
+							<div class="col-sm-12 text-center " style="display: flex;">
+								<form action="" method="post">
+									<input type="hidden" name="id" value="<%= Data._id %>">
+
+									<input style="font-weight: bold;" type="submit" value="Add To Cart"
+										onclick="popup()" class=" btn btn-warning btn-addtwishlist">
+
+								</form>
+
+								<p class="addtocart"><a onclick="popupo()" style="font-weight: bold;"
+										href="/addwishlist?id=<%= Data._id %>"
+										class=" btn btn-primary btn-addtwishlist"><i></i>Add To
+										Wishlist</a>
+									<% if(typeof error !=="undefined" ){ %>
+
+										<span style="color:rgb(8, 48, 7);">
+											<%= error %>
+										</span>
+										<% } %>
+								</p>
+							</div>
+						</div>
+						are made from different materials such as leather, synthetic leather, polyurethane, and PVC.
+						This category could include
+						discussions around the advantages and disadvantages of each material, and how they affect the
+						performance of the ball.</p>
+
+						<div class="block-26 mb-4">
+							<h3>
+								<%= Data.category %>
+							</h3>
+
+						</div>
+					</div>
+					<div class="input-group mb-4">
+						<span class="input-group-btn">
+							<button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
+								<i class="icon-minus2"></i>
+							</button>
+						</span>
+						<input type="text" id="quantity" name="quantity" class="form-control input-number" value="1"
+							min="1" max="100">
+						<span class="input-group-btn ml-1">
+							<button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
+								<i class="icon-plus2"></i>
+							</button>
+						</span>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-md-12 pills">
+						<div class="bd-example bd-example-tabs">
+							<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+
+								<li class="nav-item">
+									<a class="nav-link active" id="pills-description-tab" data-toggle="pill"
+										href="#pills-description" role="tab" aria-controls="pills-description"
+										aria-expanded="true">Description</a>
+								</li>
+
+								<li class="nav-item">
+									<a class="nav-link" id="pills-review-tab" data-toggle="pill" href="#pills-review"
+										role="tab" aria-controls="pills-review" aria-expanded="true">Review</a>
+								</li>
+							</ul>
+
+							<div class="tab-content" id="pills-tabContent">
+								<div class="tab-pane border fade show active" id="pills-description" role="tabpanel"
+									aria-labelledby="pills-description-tab">
+									<p>Even the all-powerful Pointing has no control about the blind texts it is an
+										almost unorthographic life One day however a small line of blind text by the
+										name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+									<p>When she reached the first hills of the Italic Mountains, she had a last view
+										back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet
+										Village and the subline of her own road, the Line Lane. Pityful a rethoric
+										question ran over her cheek, then she continued her way.</p>
+									<ul>
+										<li>The Big Oxmox advised her not to do so</li>
+										<li>Because there were thousands of bad Commas</li>
+										<li>Wild Question Marks and devious Semikoli</li>
+										<li>She packed her seven versalia</li>
+										<li>tial into the belt and made herself on the way.</li>
+									</ul>
+								</div>
+
+
+
+								<div class="tab-pane border fade" id="pills-review" role="tabpanel"
+									aria-labelledby="pills-review-tab">
+									<h3 class="head">
+										<%= count %> Reviews
+									</h3>
+									<% session.forEach((value)=>{ %>
+										<div class="row">
+											<div class="col-md-12">
+
+												<div class="review">
+													<div class="user-img"
+														style="background-image: url(img/userlogo.png)">
+													</div>
+													<div class="desc">
+														<h4>
+															<span class="text-left">
+																You
+															</span>
+															<span class="text-right" style="font-size:15px;">
+																<%= value.date.toISOString().substring(0,10) %>
+															</span>
+															<!-- <%if(session){ %> -->
+															<button class="float-right btn btn-warning btn-sm"
+																onclick="delet()">DELETE</button>
+															<button class="float-right btn btn-success btn-sm"
+																type="button" data-toggle="modal"
+																data-target="#exampleModal">EDIT</button>
+
+															<!-- <%}%> -->
+															<input type="hidden" value="<%=value._id%>" id="uid">
+
+														</h4>
+
+														<p>
+															<%= value.comment %>
+														</p>
+													</div>
+												</div>
+
+
+
+											</div>
+											<!-- Button trigger modal -->
+
+											<!-- Modal -->
+											<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+												aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLabel">Modal title
+															</h5>
+															<button type="button" class="close" data-dismiss="modal"
+																aria-label="Close">
+																<span aria-hidden="true">&times;</span>
+															</button>
+														</div>
+														<div class="modal-body">
+															<input type="text"  id="mo1"
+																value="<%= value.comment %> ">
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary"
+																data-dismiss="modal">Close</button>
+															<button type="button" onclick="edit()"
+																class="btn btn-primary">Save changes</button>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+										<% }) %>
+											<% not.forEach((value)=>{ %>
+												<div class="row">
+													<div class="col-md-12">
+
+														<div class="review">
+															<div class="user-img"
+																style="background-image: url(img/userlogo.png)">
+															</div>
+															<div class="desc">
+																<h4>
+																	<span class="text-left">
+																		<%= value.user %>
+																	</span>
+																	<span class="text-right" style="font-size:15px;">
+																		<%= value.date.toISOString().substring(0,10) %>
+																	</span>
+
+																</h4>
+
+																<p>
+																	<%= value.comment %>
+																</p>
+															</div>
+														</div>
+
+
+
+													</div>
+
+
+												</div>
+												<% }) %>
+													<%if(orders){ %>
+														<div class="col-md-12">
+															<form class="search-wrap">
+																<div class="form-group"
+																	style="display: flex; gap: 10px;">
+																	<input type="text" name="comment" id="mm1" class=""
+																		placeholder="add comment" style="width: 100%;">
+																	<button class="btn btn-primary "
+																		onclick="sendComment()"
+																		type="submit">send</button>
+																	<input type="hidden" name="proid" id="mm2"
+																		value="<%= Data._id %>">
+
+																</div>
+															</form>
+														</div>
+														<%}%>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<footer id="colorlib-footer" role="contentinfo">
+		<div class="container">
+			<div class="row row-pb-md">
+				<div class="col footer-col colorlib-widget">
+					<h4>About Ballten</h4>
+					<p>Even the all-powerful Pointing has no control about the blind texts it is an almost
+						unorthographic life</p>
+					<p>
+					<ul class="colorlib-social-icons">
+						<li><a href="#"><i class="icon-twitter"></i></a></li>
+						<li><a href="#"><i class="icon-facebook"></i></a></li>
+						<li><a href="#"><i class="icon-linkedin"></i></a></li>
+						<li><a href="#"><i class="icon-dribbble"></i></a></li>
+					</ul>
+					</p>
+				</div>
+				<div class="col footer-col colorlib-widget">
+					<h4>Customer Care</h4>
+					<p>
+					<ul class="colorlib-footer-links">
+						<li><a href="#">Contact</a></li>
+						<li><a href="#">Returns/Exchange</a></li>
+						<li><a href="#">Gift Voucher</a></li>
+						<li><a href="#">Wishlist</a></li>
+						<li><a href="#">Special</a></li>
+						<li><a href="#">Customer Services</a></li>
+						<li><a href="#">Site maps</a></li>
+					</ul>
+					</p>
+				</div>
+				<div class="col footer-col colorlib-widget">
+					<h4>Information</h4>
+					<p>
+					<ul class="colorlib-footer-links">
+						<li><a href="#">About us</a></li>
+						<li><a href="#">Delivery Information</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Support</a></li>
+						<li><a href="#">Order Tracking</a></li>
+					</ul>
+					</p>
+				</div>
+
+				<div class="col footer-col">
+					<h4>News</h4>
+					<ul class="colorlib-footer-links">
+						<li><a href="blog.html">Blog</a></li>
+						<li><a href="#">Press</a></li>
+						<li><a href="#">Exhibitions</a></li>
+					</ul>
+				</div>
+
+				<div class="col footer-col">
+					<h4>Contact Information</h4>
+					<ul class="colorlib-footer-links">
+						<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+						<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+						<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+						<li><a href="#">yoursite.com</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="copy">
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<p>
+						<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							<script>document.write(new Date().getFullYear());</script> All rights reserved | This
+							template is made with <i class="icon-heart" aria-hidden="true"></i> by <a
+								href="https://colorlib.com" target="_blank">Colorlib</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</span>
+						<span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a
+								href="http://pexels.com/" target="_blank">Pexels.com</a></span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+	</div>
+
+	<script>
+		$(document).ready(function () {
+
+			var quantitiy = 0;
+			$('.quantity-right-plus').click(function (e) {
+
+				// Stop acting like a button
+				e.preventDefault();
+				// Get the field name
+				var quantity = parseInt($('#quantity').val());
+
+				// If is not undefined
+
+				$('#quantity').val(quantity + 1);
+
+
+				// Increment
+
+			});
+
+			$('.quantity-left-minus').click(function (e) {
+				// Stop acting like a button
+				e.preventDefault();
+				// Get the field name
+				var quantity = parseInt($('#quantity').val());
+
+				// If is not undefined
+
+				// Increment
+				if (quantity > 0) {
+					$('#quantity').val(quantity - 1);
+				}
+			});
+
+		});
+
+
+	</script>
+	<style>
+		.image-zoom-container {
+			position: relative;
+			width: 300px;
+			/* adjust the width and height to fit your image */
+			height: 300px;
+		}
+
+		.image-zoom {
+			display: block;
+			width: 100%;
+			height: 100%;
+			transition: transform 0.5s ease;
+		}
+
+		.image-zoom:hover {
+			transform: scale(1.5);
+			z-index: 1;
+		}
+	</style>
+
+	<script>
+		const id = document.getElementById('uid').value
+		function delet() {
+			console.log(id);
+			$.ajax({
+
+				url: '/deletereview',
+				method: 'post',
+				data: {
+					id: id
+				},
+
+				success: (response) => {
+					if (response.success == true) {
+						location.reload()
+					}
+				}
+
+			})
+
+		}
+
+		function edit() {
+			const ids = document.getElementById('uid').value
+			
+			const comments = document.getElementById('mo1').value
+			console.log(comments);
+			$.ajax({
+
+				url: '/editreview',
+				method: 'post',
+				data: {
+					id:ids,
+					comments:comments
+				},
+
+				success: (response) => {
+					if (response.success == true) {
+						location.reload()
+					}
+				}
+
+			})
+		}
+	</script>
+
+	<script>
+		///reviews
+		function sendComment() {
+			var comment = document.getElementById('mm1').value;
+			var proid = document.getElementById('mm2').value;
+			console.log('100000000');
+
+			$.ajax({
+
+				url: '/addcomment',
+				method: 'post',
+				data: {
+					comment: comment,
+					id: proid
+
+				},
+
+				success: (response) => {
+					console.log('300000000');
+					console.log(response); // Log response to console (for debugging purposes)
+					location.reload(); // Reload the page after the request is successfully processed
+				},
+				error: (error) => {
+					console.log(error); // Log error to console (for debugging purposes)
+				}
+			});
+		}
+
+	</script>
+	<script>
+		function popup() {
+			Swal.fire({
+				position: 'center',
+				icon: 'success',
+				title: 'product added at cart',
+				showConfirmButton: false,
+				timer: 1500
+			})
+		}
+	</script>
+	<script>
+		function popupo() {
+			Swal.fire({
+				position: 'center',
+				icon: 'success',
+				title: 'product added at wishlist',
+				showConfirmButton: false,
+				timer: 1500
+			})
+		}
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="sweetalert2.all.min.js"></script>
+	<script src="sweetalert2.min.js"></script>
+	<link rel="stylesheet" href="sweetalert2.min.css">
+
+
+	<%- include('../layoutes/footer.ejs') %>

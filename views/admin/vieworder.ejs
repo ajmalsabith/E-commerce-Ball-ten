@@ -1,0 +1,138 @@
+<%-include('../../views/layoutes/headeradmin.ejs')%>
+
+
+
+
+    <main class="h-full pb-16 overflow-y-auto">
+        <div class="container grid px-6 mx-auto">
+    
+            
+          <br>
+    
+    
+          <div class=" grid gap-6 mb-8 md:grid-cols-2 min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <h4 class="mb-4 font-semibold text-gray-600 dark:text-gray-300">
+                Customer Address : -
+      
+      
+                <%=orders.
+                deliveryaddress%>
+              </h4>
+
+              <h4 class="mb-4 font-semibold text-gray-600 dark:text-gray-300">
+                Customer Name : - <%= orders.user%>
+              </h4>
+            <% if(orders.couponId){ %>
+              <h6 class="mb-4 font-semibold text-gray-600 dark:text-gray-300">
+                coupon Id : - <%= orders.couponId%>
+              </h6>
+              <% } if(orders.paymentid){ %>
+              <h6 class="mb-4 font-semibold text-gray-600 dark:text-gray-300">
+                peyment Id : - <%= orders.paymentid%>
+              </h6>
+              <%}%>
+
+
+
+              <form method="post">
+
+                <div class="form-group" >
+                    <label style="color: chartreuse;" for="status">change status</label>
+                    <div class="form-field" style="display: flex;">
+                        <i class="icon icon-arrow-down3"></i>
+                        <select name="status" style="background-color:rgb(55, 215, 202);border-radius:5px;"   class="form-control">
+                            <option  value="<%=orders.status%>"><%=orders.status%></option>
+                              
+                          
+                            <option value="shipped">shipped</option>
+                            <option value="deliverd">deliverd</option>
+                            <option value="placed">placed</option>
+                            <option value="cancelled">cancelled</option>
+                            <option value="cancelled">returned</option>
+                           
+                        </select>
+                        <input type="submit" style="background-color:yellow;border-radius:5px;" value="edit">
+                    </div>
+                   
+                </div>
+                     <input type="hidden" name="id" value="<%=orders._id%>">
+
+              </form>
+    
+    
+          </div>
+          <% orders.product.forEach((value,index)=>{%>
+    
+    
+            <div class="w-full overflow-hidden rounded-lg shadow-xs">
+              <div class="w-full overflow-x-auto">
+                <table class="w-full whitespace-no-wrap">
+                  <thead>
+                    <tr
+                      class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                      <th class="px-4 py-3">SL%></th>
+                      <th class="px-4 py-3">order ID</th>
+                      <th class="px-4 py-3">Product Name</th>
+                      <th class="px-4 py-3">Quantity</th>
+    
+                     
+    
+                      <!-- <th class="px-4 py-3">Status</th> -->
+    
+                    </tr>
+    
+                  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+    
+    
+                    <tr class="text-gray-700 dark:text-gray-400">
+                      <td class="px-4 py-3">
+                        <%= index+1%>
+                      </td>
+                      <td class="px-4 py-3">
+                        <%= value._id%>
+                      </td>
+                      <td class="px-4 py-3">
+                        <%= value.productId.name%>
+                      </td>
+                      <td class="px-4 py-3">
+                        <%= value.count%>
+                      </td>
+                      
+                  </tbody>
+                  </thead>
+                  <tbody></tbody>
+    
+    
+    
+    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+    
+            <br><br>
+    
+            <div class="grid gap-6 mb-8 md:grid-cols-2">
+    
+    
+              <div class=" grid gap-6 mb-8 md:grid-cols-2 min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                <h4 class="mb-4 font-semibold text-gray-600 dark:text-gray-300">
+                  Product Image
+                  <img style="width: 200px; height: auto;"
+                    src="../img/<%=value.productId.image[0] %>" alt="">
+                </h4>
+                <p class="text-gray-600 dark:text-gray-400">
+                  Description :-
+                  <%= value.productId.discription%>
+                  are made from different materials such as leather, synthetic
+                   leather, polyurethane, and PVC. This category could include discussions around the 
+                  advantages and disadvantages of each material, and how they affect the performance of the ball.
+                </p>
+              </div>
+    
+    
+            </div>
+            <%})%>
+    
+        </div>
+      </main>
