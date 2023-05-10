@@ -13,9 +13,7 @@
             <a href="#"> <button class="btn btn-danger">Sales report </button></a>
         </h2>
 
-        <a href="/admin/download"><button style="float: right;"  class=" block w-50 px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-            download</button></a> 
-         
+        
 
         <form action="" method="post">
            <div style="display: flex;">
@@ -50,7 +48,7 @@
                             <th class="px-4 py-3">No</th>
                             <th class="px-4 py-3">orderd id</th>
                             <th class="px-4 py-3">Name</th>
-                            <th class="px-4 py-3">product-name&price</th>
+                           
                             <th class="px-4 py-3">date</th>
                             <th class="px-4 py-3">amount</th>                                     
                             <th class="px-4 py-3">peyment method</th>
@@ -96,19 +94,8 @@
                                     <%= orders[i].user%>
 
 
-                                </td>
                                
-                                <td>
-                                  
-                                  <ul>
-                                    <ol>
-                                      <% for(let j=0;j<orders[i].product.length;j++){ %>
-                                        
-                                      <li><%=j+1%>-<%=orders[i].product[j].productId.name    %>:<%=orders[i].product[j].productId.price %> </li><br>
-                                      <% }%>
-                                    </ol>
-                                  </ul>
-                               
+                                 
                                 </td>
                               
                                 <td class="px-4 py-3 text-sm">
