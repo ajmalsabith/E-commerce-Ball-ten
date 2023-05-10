@@ -13,11 +13,11 @@ const sharp = require('sharp')
 const { updateOne } = require('../models/CartModel')
 
 ///html to pdfgenerate require things
-const ejs = require('ejs')
-const pdf = require('html-pdf')
-const fs = require('fs')
-const path = require('path')
-const { forEach } = require('async')
+// const ejs = require('ejs')
+// const pdf = require('html-pdf')
+// const fs = require('fs')
+// const path = require('path')
+// const { forEach } = require('async')
 
 
 const getlogin = async (req, res) => {
@@ -644,105 +644,105 @@ const filterdate = async (req, res) => {
 
 }
 
-const exportTopdf = async (req, res) => {
-    try {
+// const exportTopdf = async (req, res) => {
+//     try {
 
-        if (req.session.look == 'm1') {
-            const orderdetails = await order.find().sort({ date: -1 }).populate('product.productId')
-            const data = {
-                report: orderdetails
-            }
+//         if (req.session.look == 'm1') {
+//             const orderdetails = await order.find().sort({ date: -1 }).populate('product.productId')
+//             const data = {
+//                 report: orderdetails
+//             }
 
-            const filepath = path.resolve(__dirname, '../views/admin/salesreporttopdf.ejs')
-            const htmlstring = fs.readFileSync(filepath).toString()
+//             const filepath = path.resolve(__dirname, '../views/admin/salesreporttopdf.ejs')
+//             const htmlstring = fs.readFileSync(filepath).toString()
 
-            let option = {
-                format: "A3"
-            }
-            const ejsData = ejs.render(htmlstring, data)
-            pdf.create(ejsData, option).toFile('salesReport.pdf', (err, response) => {
-                if (err) console.log(err);
+//             let option = {
+//                 format: "A3"
+//             }
+//             const ejsData = ejs.render(htmlstring, data)
+//             pdf.create(ejsData, option).toFile('salesReport.pdf', (err, response) => {
+//                 if (err) console.log(err);
 
-                const filepath = path.resolve(__dirname, '../salesReport.pdf')
-                fs.readFile(filepath, (err, file) => {
-                    if (err) {
-                        console.log(err);
-                        return res.status(500).send('could not download file')
-                    }
-                    res.setHeader('Content-Type', 'application/pdf')
-                    res.setHeader('Content-Disposition', 'attatchment;filename="Sales Report.pdf"')
+//                 const filepath = path.resolve(__dirname, '../salesReport.pdf')
+//                 fs.readFile(filepath, (err, file) => {
+//                     if (err) {
+//                         console.log(err);
+//                         return res.status(500).send('could not download file')
+//                     }
+//                     res.setHeader('Content-Type', 'application/pdf')
+//                     res.setHeader('Content-Disposition', 'attatchment;filename="Sales Report.pdf"')
 
-                    res.send(file)
+//                     res.send(file)
 
-                })
-            })
-        } else if (req.session.look == 'm2') {
-            const orderdetails = await order.find({ date: { $gte: req.session.date1, $lte: req.session.date2 } }).sort({ date: -1 }).populate('product.productId');
-            const data = {
-                report: orderdetails
-            }
+//                 })
+//             })
+//         } else if (req.session.look == 'm2') {
+//             const orderdetails = await order.find({ date: { $gte: req.session.date1, $lte: req.session.date2 } }).sort({ date: -1 }).populate('product.productId');
+//             const data = {
+//                 report: orderdetails
+//             }
 
-            const filepath = path.resolve(__dirname, '../views/admin/salesreporttopdf.ejs')
-            const htmlstring = fs.readFileSync(filepath).toString()
+//             const filepath = path.resolve(__dirname, '../views/admin/salesreporttopdf.ejs')
+//             const htmlstring = fs.readFileSync(filepath).toString()
 
-            let option = {
-                format: "A3"
-            }
-            const ejsData = ejs.render(htmlstring, data)
-            pdf.create(ejsData, option).toFile('salesReport.pdf', (err, response) => {
-                if (err) console.log(err);
+//             let option = {
+//                 format: "A3"
+//             }
+//             const ejsData = ejs.render(htmlstring, data)
+//             pdf.create(ejsData, option).toFile('salesReport.pdf', (err, response) => {
+//                 if (err) console.log(err);
 
-                const filepath = path.resolve(__dirname, '../salesReport.pdf')
-                fs.readFile(filepath, (err, file) => {
-                    if (err) {
-                        console.log(err);
-                        return res.status(500).send('could not download file')
-                    }
-                    res.setHeader('Content-Type', 'application/pdf')
-                    res.setHeader('Content-Disposition', 'attatchment;filename="Sales Report.pdf"')
+//                 const filepath = path.resolve(__dirname, '../salesReport.pdf')
+//                 fs.readFile(filepath, (err, file) => {
+//                     if (err) {
+//                         console.log(err);
+//                         return res.status(500).send('could not download file')
+//                     }
+//                     res.setHeader('Content-Type', 'application/pdf')
+//                     res.setHeader('Content-Disposition', 'attatchment;filename="Sales Report.pdf"')
 
-                    res.send(file)
+//                     res.send(file)
 
-                })
-            })
-        } else if (req.session.look == 'm3') {
-            const orderdetails = await order.find().sort({ date: -1 }).populate('product.productId')
-            const data = {
-                report: orderdetails
-            }
+//                 })
+//             })
+//         } else if (req.session.look == 'm3') {
+//             const orderdetails = await order.find().sort({ date: -1 }).populate('product.productId')
+//             const data = {
+//                 report: orderdetails
+//             }
 
-            const filepath = path.resolve(__dirname, '../views/admin/salesreporttopdf.ejs')
-            const htmlstring = fs.readFileSync(filepath).toString()
+//             const filepath = path.resolve(__dirname, '../views/admin/salesreporttopdf.ejs')
+//             const htmlstring = fs.readFileSync(filepath).toString()
 
-            let option = {
-                format: "A3"
-            }
-            const ejsData = ejs.render(htmlstring, data)
-            pdf.create(ejsData, option).toFile('salesReport.pdf', (err, response) => {
-                if (err) console.log(err);
+//             let option = {
+//                 format: "A3"
+//             }
+//             const ejsData = ejs.render(htmlstring, data)
+//             pdf.create(ejsData, option).toFile('salesReport.pdf', (err, response) => {
+//                 if (err) console.log(err);
 
-                const filepath = path.resolve(__dirname, '../salesReport.pdf')
-                fs.readFile(filepath, (err, file) => {
-                    if (err) {
-                        console.log(err);
-                        return res.status(500).send('could not download file')
-                    }
-                    res.setHeader('Content-Type', 'application/pdf')
-                    res.setHeader('Content-Disposition', 'attatchment;filename="Sales Report.pdf"')
+//                 const filepath = path.resolve(__dirname, '../salesReport.pdf')
+//                 fs.readFile(filepath, (err, file) => {
+//                     if (err) {
+//                         console.log(err);
+//                         return res.status(500).send('could not download file')
+//                     }
+//                     res.setHeader('Content-Type', 'application/pdf')
+//                     res.setHeader('Content-Disposition', 'attatchment;filename="Sales Report.pdf"')
 
-                    res.send(file)
+//                     res.send(file)
 
-                })
-            })
-        }
+//                 })
+//             })
+//         }
 
 
-    } catch (error) {
+//     } catch (error) {
 
-        console.log(error.message);
+//         console.log(error.message);
 
-    }
-}
+//     }
+// }
 
 module.exports = {
     getlogin,
@@ -777,7 +777,7 @@ module.exports = {
 
     vieworderget,
     salesreport,
-    exportTopdf,
+    // exportTopdf,
     filterdate
 
 

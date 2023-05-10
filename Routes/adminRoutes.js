@@ -61,7 +61,7 @@ admin_router.get('/vieworder',authadmin.is_login,adminController.vieworderget)
 
 admin_router.get('/salesreport',authadmin.is_login,adminController.salesreport)
 
-admin_router.get('/download',adminController.exportTopdf)
+// admin_router.get('/download',adminController.exportTopdf)
 admin_router.post('/salesreport',adminController.filterdate)
 
 
