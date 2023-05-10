@@ -8,7 +8,17 @@ const { log } = require('npmlog')
 const { name } = require('ejs')
 const mongoose = require('mongoose')
 const sharp = require('sharp')
+const cloudinary = require('cloudinary').v2
 
+
+
+cloudinary.config({
+    cloud_name:'dn22c933z',
+    api_key: '251717459957397',
+    api_secret:'UgNJSOhGxYyjM2lQBqhpChI1lt4',
+    secure: true,
+  });
+  
 
 const { updateOne } = require('../models/CartModel')
 
@@ -293,18 +303,19 @@ const getproduct = async (req, res) => {
     }
 
 }
+
 const insertproduct = async (req, res) => {
     try {
-
+       let cloudcdn=[]
         const image = []
         for (let i = 0; i < req.files.length; i++) {
             image[i] = req.files[i].filename
-            sharp('./public/users/imgs/' + req.files[i].filename)
-                .resize(300, 300).toFile('./public/users/img/' + req.files[i].filename)
+           await sharp('./public/users/imgs/' + req.files[i].filename)
+            .resize(300, 300).toFile('./public/users/img/' + req.files[i].filename)
+             const data= await cloudinary.uploader.upload('./public/users/img/'+req.files[i].filename)
+             
+            cloudcdn.push(data.secure_url)
         }
-
-
-
 
 
         const newproduct = new product({
@@ -312,7 +323,7 @@ const insertproduct = async (req, res) => {
             name: req.body.name,
             price: req.body.price,
             category: req.body.categoryname,
-            image: image,
+            image: cloudcdn,
             discription: req.body.discription,
             stock: req.body.stock,
             is_block: true
@@ -356,12 +367,15 @@ const geteditproduct = async (req, res) => {
 const editeproduct = async (req, res) => {
     try {
         const id = req.query.id
-
+        let cloudcdn=[]
         const image = []
         for (let i = 0; i < req.files.length; i++) {
             image[i] = req.files[i].filename
-            sharp('./public/users/imgs/' + req.files[i].filename)
-                .resize(300, 300).toFile('./public/users/img/' + req.files[i].filename)
+            await sharp('./public/users/imgs/' + req.files[i].filename)
+            .resize(300, 300).toFile('./public/users/img/' + req.files[i].filename)
+             const data= await cloudinary.uploader.upload('./public/users/img/'+req.files[i].filename)
+             
+            cloudcdn.push(data.secure_url)
         }
 
 
@@ -371,7 +385,7 @@ const editeproduct = async (req, res) => {
 
             const update = await product.findByIdAndUpdate({ _id: id }, { $set: { name: req.body.name, price: req.body.price, category: req.body.categoryname, discription: req.body.discription, stock: req.body.stock } })
             for (let i = 0; i < req.files.length; i++) {
-                const dataa = await product.findByIdAndUpdate({ _id: id }, { $push: { image: image } })
+                const dataa = await product.findByIdAndUpdate({ _id: id }, { $push: { image: cloudcdn } })
             }
             res.redirect('/admin/product')
         }

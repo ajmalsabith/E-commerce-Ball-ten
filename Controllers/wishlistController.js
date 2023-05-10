@@ -70,14 +70,15 @@ const getwishlist = async (req, res) => {
 
     const prodata = await whishlist.findOne({ userId: session }).populate('product.productId')
     const userdata = await Users.findOne({ _id: session })
-    const relproduct = await product.find({ category: 'BeachBall' })
+    
 
 
     if (session) {
 
         if (prodata) {
             if(prodata.product.length>0){
-                res.render('add-to-wishlist', { prodata: prodata, relproduct: relproduct })
+                console.log('ajmalsabith444');
+                res.render('add-to-wishlist', { prodata: prodata})
             }else{
                 res.render('emtywishlist', { error: 'no one product added whishlist' })
             }

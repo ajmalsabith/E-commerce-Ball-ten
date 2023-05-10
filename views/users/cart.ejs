@@ -59,7 +59,7 @@
 										<div class="one-forth">
 											<div class="product-img pt-3">
 												<img style="width: 60px; height: 60px;"
-													src="../img/<%= product[i].productId.image[0] %>" alt="">
+													src="<%= product[i].productId.image[0] %>" alt="">
 											</div>
 											<div class="display-tc">
 												<h3>
@@ -145,29 +145,7 @@
 					<h2>Related Products</h2>
 				</div>
 			</div>
-			<div class="row">
-				<% for(let i=0;i<4;i++){ %>
-					<div class="col-lg-3 mb-4 text-center">
-						<div class="product-entry border">
-							<a href="/product?id=<%= relproduct[i]._id %>" class="prod-img">
-								<img src="img/<%= relproduct[i].image[0] %>" class="img-fluid"
-									alt="Free html5 bootstrap 4 template">
-							</a>
-							<div class="desc">
-								<h2>
-									<%= relproduct[i].name %>
-								</h2>
-								<span class="price">
-									<%= relproduct[i].discription %>
-								</span>
-								<h2><a href="#"></a>$<%= relproduct[i].price %>
-								</h2>
-							</div>
-						</div>
-					</div>
-					<% } %>
-				
-			</div>
+			
 		</div>
 	</div>
 

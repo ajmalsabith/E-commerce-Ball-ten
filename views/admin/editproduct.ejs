@@ -52,7 +52,7 @@
                <% for(let i=0;i<product.image.length;i++){  %>
                     
                         <span class="text-gray-700 dark:text-gray-400">Image</span>
-                       <a href="/admin/deleteimage?id=<%= product.image[i] %>&idpp=<%= product._id %> " style="background-color:red;" >DELETE<img style="width: 60px; height: 60px;" src="../img/<%= product.image[i] %>"
+                       <a href="/admin/deleteimage?id=<%= product.image[i] %>&idpp=<%= product._id %> " style="background-color:red;" >DELETE<img style="width: 60px; height: 60px;" src="<%= product.image[i] %>"
                         alt=""></a>
                    <%}%>
 

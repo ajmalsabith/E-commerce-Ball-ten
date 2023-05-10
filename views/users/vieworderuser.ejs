@@ -50,7 +50,7 @@
                     <td><%=index+1%> </td>
 
                     <td><%=value.productId.name%></td>
-                    <td> <a href="/product?id=<%=value.productId._id%>"><img style="width: 50px;height: 50px; margin-right: 20px;" src="img/<%=value.productId.image[0]%>" alt=""></a>
+                    <td> <a href="/product?id=<%=value.productId._id%>"><img style="width: 50px;height: 50px; margin-right: 20px;" src="<%=value.productId.image[0]%>" alt=""></a>
                     </td>
 
                     <td><%= value.count%></td>
