@@ -103,26 +103,36 @@
 			</div>
 
 			<div class="row row-pb-md">
-				<% for(let i=0;i<8;i++){ %>
-					<div class="col-lg-3 mb-4 text-center">
-						<div class="product-entry border">
-							<a href="/product?id=<%= product[i]._id %>" class="prod-img">
-								<img src="img/<%= product[i].image[0] %>" class="img-fluid"
-									alt="Free html5 bootstrap 4 template">
-							</a>
-							<div class="desc">
-								<h2>
-									<%= product[i].name %>
-								</h2>
-								<span class="price">
-									<%= product[i].discription %>
-								</span>
-								<h2><a href="#"></a>$<%= product[i].price %>
-								</h2>
+				<%
+				if(product.length>0){
+					for(let i=0;i<product.length;i++){
+						%>
+						<div class="col-lg-3 mb-4 text-center">
+							<div class="product-entry border">
+								<a href="/product?id=<%= product[i]._id %>" class="prod-img">
+									<img src="img/<%= product[i].image[0] %>" class="img-fluid"
+										alt="Free html5 bootstrap 4 template">
+								</a>
+								<div class="desc">
+									<h2>
+										<%= product[i].name %>
+									</h2>
+									<span class="price">
+										<%= product[i].discription %>
+									</span>
+									<h2><a href="#"></a>$<%= product[i].price %>
+									</h2>
+								</div>
 							</div>
 						</div>
-					</div>
-					<% } %>
+						<%
+					}
+				}else{
+					%>
+						<p>No products added</p>
+					<%
+				}
+				%>
 						<div class="row">
 							<div class="col-md-12 text-center">
 								<p><a href="#" class="btn btn-primary btn-lg">Shop All Products</a></p>
