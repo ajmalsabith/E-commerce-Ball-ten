@@ -210,7 +210,7 @@ const compareotp = async (req, res) => {
         if (otp == req.body.otp) {
             const id = req.query.id
             console.log(id+'ajmal');
-            const data = await Users.findByIdAndUpdate({ _id: id }, { $set: { is_varified: 1 } })
+            const data = await Users.findByIdAndUpdate({ _id: id }, { $set: { is_block: 1} })
             res.redirect('/login')
 
         } else {
@@ -666,7 +666,7 @@ const confirmchange = async (req, res) => {
 
 const userlogout = async (req, res) => {
     try {
-        req.session.destroy()
+        req.session.user_id=false
         res.redirect('/login')
 
 

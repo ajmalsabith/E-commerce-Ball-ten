@@ -183,7 +183,7 @@ const findidblock = async (req, res) => {
             res.redirect('/admin/userManage')
         } else {
             const data = await Users.findByIdAndUpdate({ _id: id }, { $set: { is_varified: 1 } })
-            req.session.destroy()
+            req.session.user_id=false      
             res.redirect('/admin/userManage')
         }
 
@@ -200,7 +200,7 @@ const findidblock = async (req, res) => {
     
 const adminlogout = async (req, res) => {
     try {
-        req.session.destroy()
+        req.session.admin_id=false     
         res.redirect('/admin/login')
 
 
@@ -260,16 +260,24 @@ const editecategory = async (req, res) => {
     try {
         const id = req.query.id
 
-        const category = await Category.findOne({ _id: id })
-        const dataa = await Category.findOne({ name: req.body.category })
+       
+        
+        const category = await Category.findOne({_id:id})
+        const neww=category.name
+        const dataa = await Category.findOne({name:req.body.category})
+        console.log(dataa);
 
         if (dataa) {
-            res.render('editcategory', { error: 'this Category allready added', category })
+            res.render('editcategory',{ category,error: 'this Category allready added'})
         } else {
 
 
+console.log('89898');
             const data = await Category.findByIdAndUpdate({ _id: id }, { $set: { name: req.body.category } })
-            res.redirect('/admin/Category')
+            if(data){
+                res.redirect('/admin/Category')
+            }
+          
         }
     } catch (error) {
         console.log(error.message)
