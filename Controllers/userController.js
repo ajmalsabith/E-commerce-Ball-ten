@@ -211,7 +211,10 @@ const compareotp = async (req, res) => {
             const id = req.query.id
             console.log(id+'ajmal');
             const data = await Users.findByIdAndUpdate({ _id: id }, { $set: { is_block: 1} })
-            res.redirect('/login')
+            if(data){
+                res.redirect('/login')
+            }
+            
 
         } else {
             res.render('otp', { message: 'otp is incorrect please check ' })
