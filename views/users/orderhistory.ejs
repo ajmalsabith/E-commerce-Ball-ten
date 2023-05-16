@@ -1,89 +1,88 @@
 <%- include('../layoutes/header.ejs') %>
 
-
-	<div class="breadcrumbs">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<p class="bread"><span><a href="/home">Home</a></span> / <span>order history</span></p>
-				</div>
+<div class="breadcrumbs">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<p class="bread"><span><a href="/home">Home</a></span> / <span>order history</span></p>
 			</div>
 		</div>
 	</div>
+</div>
 
 
-	<div class="colorlib-product">
-		<div class="container">
-			<div class="row row-pb-lg">
-				<div class="col-md-12">
-					<div class="product-name d-flex">
-						<div class="one-forth text-left px-4">
-							<span>orderId</span>
-						</div>
-						<div class="one-eight text-center">
-							<span style="padding-right:30px;">purchaceamount</span>
-						</div>
-						<div class="one-eight text-center">
-							<span>date</span>
-						</div>
-						<div class="one-eight text-center">
-							<span>peymentmethod</span>
-						</div>
-						<div class="one-eight text-center px-4">
-							<span>status</span>
-						</div>
-						<div class="one-eight text-center px-4">
-							<span>Returns</span>
-						</div>
-
+<div class="colorlib-product">
+	<div class="container">
+		<div class="row row-pb-lg">
+			<div class="col-md-12">
+				<div class="product-name d-flex">
+					<div class="one-forth text-left px-4">
+						<span>orderId</span>
 					</div>
-					<% for(let i=0;i<orderdata.length;i++){ %>
+					<div class="one-eight text-center">
+						<span style="padding-right:30px;">amount</span>
+					</div>
+					<div class="one-eight text-center">
+						<span>date</span>
+					</div>
+					<div class="one-eight text-center">
+						<span>paytype</span>
+					</div>
+					<div class="one-eight text-center px-4">
+						<span>status</span>
+					</div>
+					<div class="one-eight text-center px-4">
+						<span>Returns</span>
+					</div>
+
+				</div>
+				<% for(let i=0;i<orderdata.length;i++){ %>
 
 
-					
 
-						<div class="product-cart d-flex">
-							<div class="one-forth">
-								<p>
-									<%=i+1%>
-								</p>
-								<div class="display-tc">
-									<h3>
-										<%= orderdata[i]._id %>
-									</h3>
-								</div>
+
+					<div class="product-cart d-flex">
+						<div class="one-forth">
+							<p>
+								<%=i+1%>
+							</p>
+							<div class="display-tc">
+								<h3 class="ellipsis">
+									<%= orderdata[i]._id.toString().substring(0,10) %>
+								</h3>
 							</div>
+						</div>
+						<div class="one-eight text-center">
+							<div class="display-tc">
+								<span class="price">
+									<%= orderdata[i].totalamount %>
+								</span>
+							</div>
+						</div>
+						<div class="one-eight text-center">
+							<div class="display-tc">
+								<span class="price">
+									<%= orderdata[i].date.toISOString().substring(0,10)%>
+								</span>
+							</div>
+						</div>
+						<div class="one-eight text-center">
+							<div class="display-tc">
+								<span class="price">
+									<%= orderdata[i].peymentMethod%>
+								</span>
+							</div>
+						</div>
+
+						<%if(orderdata[i].status=='pending'){%>
+
 							<div class="one-eight text-center">
 								<div class="display-tc">
 									<span class="price">
-										<%= orderdata[i].totalamount %>
+										<button class="btn btn-dark btn-sm">pending</button>
 									</span>
 								</div>
 							</div>
-							<div class="one-eight text-center">
-								<div class="display-tc">
-									<span class="price">
-										<%= orderdata[i].date.toISOString().substring(0,10)%>
-									</span>
-								</div>
-							</div>
-							<div class="one-eight text-center">
-								<div class="display-tc">
-									<span class="price">
-										<%= orderdata[i].peymentMethod%>
-									</span>
-								</div>
-							</div>
-
-							<%if(orderdata[i].status=='pending'){%>
-
-								<div class="one-eight text-center">
-									<div class="display-tc">
-										<span class="price">
-											<button class="btn btn-dark btn-sm">pending</button>
-										</span>
-									</div>
-								</div>
 
 							<% } else if(orderdata[i].status=='shipped' ){ %>
 								<div class="one-eight text-center">
@@ -120,255 +119,289 @@
 												</div>
 											</div>
 
-										<%}else{%>
+											<%}else{%>
 
-											<div class="one-eight text-center">
-												<div class="display-tc">
-													<span class="price">
-														<button class="btn btn-info btn-sm">placed</button>
-													</span>
+												<div class="one-eight text-center">
+													<div class="display-tc">
+														<span class="price">
+															<button class="btn btn-info btn-sm">placed</button>
+														</span>
+													</div>
 												</div>
-											</div>
-											<%}%>
-												<div class="flex items-center space-x-4 text-sm">
-													<% if(orderdata[i].status=='deliverd' ){ %>
+												<%}%>
+													<div class="flex items-center space-x-4 text-sm">
+														<% if(orderdata[i].status=='deliverd' ){ %>
 
 
-														<% if(new Date()>orderdata[i].exprdatereturn){ %>
+															<% if(new Date()>orderdata[i].exprdatereturn){ %>
 
-															<button type="button" onclick="popupo()"
-																class="btn btn-outline-danger btn-sm">Return</button>
-
-
-															<%}else{%>
-																<input type="hidden" id="mmi" value="">
-																<a href="#"><button
-																		type="button" onclick="orderreturn(id='<%= orderdata[i]._id %>')"
-																		class="btn btn-outline-danger btn-sm">Return</button></a>
-
-																<%}%>
+																<button type="button" onclick="popupo()"
+																	class="btn btn-outline-danger btn-sm">Return</button>
 
 
+																<%}else{%>
+																	<input type="hidden" id="mmi" value="">
+																	<a href="#"><button type="button"
+																			onclick="orderreturn(id='<%= orderdata[i]._id %>')"
+																			class="btn btn-outline-danger btn-sm">Return</button></a>
+
+																	<%}%>
 
 
-																	<%}else{ %>
 
-																		<% if(orderdata[i].status=='cancelled' ){ %>
 
-																			<a href="#"><button type="button"
-																					class="btn btn-outline-danger btn-sm">Cancelled</button></a>
-																			<%}else if(orderdata[i].status=='pending' ){ %>
-																				                                         
+																		<%}else{ %>
 
+																			<% if(orderdata[i].status=='cancelled'
+																				){ %>
 
 																				<a href="#"><button type="button"
-																						class="btn btn-outline-dark btn-sm">Pending</button></a>
-
-																				
-
-																				<%}else if(orderdata[i].status=='returned'){%>
-																					
-																				<a href="#"><button type="button"
-																					class="btn btn-outline-danger btn-sm">returned</button></a>
-																					
-																				<%}else{%>
-																					
-																					<a
-																					href="#"><button
-																						type="button" onclick="cancelorder(id='<%= orderdata[i]._id %>')"
-																						class="btn btn-outline-danger btn-sm">Cancel</button></a>
-
-
-																				<%}%>
-																					<%}%>
-
-																						<a
-																							href="/vieworderuser?id=<%= orderdata[i]._id %>"><button
-																								class="btn btn-outline-warning btn-sm">
-																								vieworder</button></a>
-
-
-												</div>
-						</div>
-						<%}%>
+																						class="btn btn-outline-danger btn-sm">Cancelled</button></a>
+																				<%}else
+																					if(orderdata[i].status=='pending'
+																					){ %>
 
 
 
+																					<a href="#"><button
+																							type="button"
+																							class="btn btn-outline-dark btn-sm">Pending</button></a>
 
 
+
+																					<%}else
+																						if(orderdata[i].status=='returned'
+																						){%>
+
+																						<a href="#"><button
+																								type="button"
+																								class="btn btn-outline-danger btn-sm">returned</button></a>
+
+																						<%}else{%>
+
+																							<a href="#"><button
+																									type="button"
+																									onclick="cancelorder(id='<%= orderdata[i]._id %>')"
+																									class="btn btn-outline-danger btn-sm">Cancel</button></a>
+
+
+																							<%}%>
+																								<%}%>
+
+																									<a
+																										href="/vieworderuser?id=<%= orderdata[i]._id %>"><button
+																											class="btn btn-outline-warning btn-sm">
+																											vieworder</button></a>
+
+
+													</div>
+					</div>
+					<%}%>
+					
+
+
+
+
+
+			</div>
+		</div>
+
+
+
+
+		<footer id="colorlib-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-pb-md">
+					<div class="col footer-col colorlib-widget">
+						<h4>About Ballten</h4>
+						<p>Even the all-powerful Pointing has no control about the blind texts it is an almost
+							unorthographic life</p>
+						<p>
+						<ul class="colorlib-social-icons">
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-linkedin"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+						</ul>
+						</p>
+					</div>
+					<div class="col footer-col colorlib-widget">
+						<h4>Customer Care</h4>
+						<p>
+						<ul class="colorlib-footer-links">
+							<li><a href="#">Contact</a></li>
+							<li><a href="#">Returns/Exchange</a></li>
+							<li><a href="#">Gift Voucher</a></li>
+							<li><a href="#">Wishlist</a></li>
+							<li><a href="#">Special</a></li>
+							<li><a href="#">Customer Services</a></li>
+							<li><a href="#">Site maps</a></li>
+						</ul>
+						</p>
+					</div>
+					<div class="col footer-col colorlib-widget">
+						<h4>Information</h4>
+						<p>
+						<ul class="colorlib-footer-links">
+							<li><a href="#">About us</a></li>
+							<li><a href="#">Delivery Information</a></li>
+							<li><a href="#">Privacy Policy</a></li>
+							<li><a href="#">Support</a></li>
+							<li><a href="#">Order Tracking</a></li>
+						</ul>
+						</p>
+					</div>
+
+					<div class="col footer-col">
+						<h4>News</h4>
+						<ul class="colorlib-footer-links">
+							<li><a href="blog.html">Blog</a></li>
+							<li><a href="#">Press</a></li>
+							<li><a href="#">Exhibitions</a></li>
+						</ul>
+					</div>
+
+					<div class="col footer-col">
+						<h4>Contact Information</h4>
+						<ul class="colorlib-footer-links">
+							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+							<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+							<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+							<li><a href="#">yoursite.com</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
-
-
-
-
-			<footer id="colorlib-footer" role="contentinfo">
-				<div class="container">
-					<div class="row row-pb-md">
-						<div class="col footer-col colorlib-widget">
-							<h4>About Ballten</h4>
-							<p>Even the all-powerful Pointing has no control about the blind texts it is an almost
-								unorthographic life</p>
-							<p>
-							<ul class="colorlib-social-icons">
-								<li><a href="#"><i class="icon-twitter"></i></a></li>
-								<li><a href="#"><i class="icon-facebook"></i></a></li>
-								<li><a href="#"><i class="icon-linkedin"></i></a></li>
-								<li><a href="#"><i class="icon-dribbble"></i></a></li>
-							</ul>
-							</p>
-						</div>
-						<div class="col footer-col colorlib-widget">
-							<h4>Customer Care</h4>
-							<p>
-							<ul class="colorlib-footer-links">
-								<li><a href="#">Contact</a></li>
-								<li><a href="#">Returns/Exchange</a></li>
-								<li><a href="#">Gift Voucher</a></li>
-								<li><a href="#">Wishlist</a></li>
-								<li><a href="#">Special</a></li>
-								<li><a href="#">Customer Services</a></li>
-								<li><a href="#">Site maps</a></li>
-							</ul>
-							</p>
-						</div>
-						<div class="col footer-col colorlib-widget">
-							<h4>Information</h4>
-							<p>
-							<ul class="colorlib-footer-links">
-								<li><a href="#">About us</a></li>
-								<li><a href="#">Delivery Information</a></li>
-								<li><a href="#">Privacy Policy</a></li>
-								<li><a href="#">Support</a></li>
-								<li><a href="#">Order Tracking</a></li>
-							</ul>
-							</p>
-						</div>
-
-						<div class="col footer-col">
-							<h4>News</h4>
-							<ul class="colorlib-footer-links">
-								<li><a href="blog.html">Blog</a></li>
-								<li><a href="#">Press</a></li>
-								<li><a href="#">Exhibitions</a></li>
-							</ul>
-						</div>
-
-						<div class="col footer-col">
-							<h4>Contact Information</h4>
-							<ul class="colorlib-footer-links">
-								<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
-								<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
-								<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
-								<li><a href="#">yoursite.com</a></li>
-							</ul>
-						</div>
+			<div class="copy">
+				<div class="row">
+					<div class="col-sm-12 text-center">
+						<p>
+							<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+								Copyright &copy;
+								<script>document.write(new Date().getFullYear());</script> All rights reserved |
+								This
+								template is made with <i class="icon-heart" aria-hidden="true"></i> by <a
+									href="https://colorlib.com" target="_blank">Colorlib</a>
+								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							</span>
+							<span class="block">Demo Images: <a href="http://unsplash.co/"
+									target="_blank">Unsplash</a> , <a href="http://pexels.com/"
+									target="_blank">Pexels.com</a></span>
+						</p>
 					</div>
 				</div>
-				<div class="copy">
-					<div class="row">
-						<div class="col-sm-12 text-center">
-							<p>
-								<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-									Copyright &copy;
-									<script>document.write(new Date().getFullYear());</script> All rights reserved |
-									This
-									template is made with <i class="icon-heart" aria-hidden="true"></i> by <a
-										href="https://colorlib.com" target="_blank">Colorlib</a>
-									<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								</span>
-								<span class="block">Demo Images: <a href="http://unsplash.co/"
-										target="_blank">Unsplash</a> , <a href="http://pexels.com/"
-										target="_blank">Pexels.com</a></span>
-							</p>
-						</div>
-					</div>
-				</div>
-			</footer>
-		</div>
+			</div>
+		</footer>
+	</div>
 
-		<div class="gototop js-top">
-			<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
-		</div>
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+	</div>
 
 
-		<script>
-			function popupo() {
-				Swal.fire({
-					icon: 'error',
-					title: 'Oops...',
-					text: 'your return date is expred!'
-				})
-			}
-		</script>
+	<style>
+		.ellipsis {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: 200px;
+			/* adjust as needed */
+			position: relative;
+		}
 
-		<script>
-  function orderreturn(id) {
+		.ellipsis:hover:after {
+			content: attr(title);
+			display: block;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			white-space: normal;
+			background-color: #333;
+			color: #fff;
+			padding: 5px;
+		}
+	</style>
 
-	// const id=document.getElementById('mmi').value
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, return order it!",
-        cancelButtonText: "Cancel",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          $.ajax({
-            url: "/returnorder",
-            data: {
+	<script>
+		function popupo() {
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'your return date is expred!'
+			})
+		}
+	</script>
 
-               id:id,
-            },
-            method: "post",
-            success: (response) => {
-              if ((response.remove = true)) {
-                location.reload();
-              }
-            },
-          });
-        }
-      });
-    }
+	<script>
+		function orderreturn(id) {
 
-	function cancelorder(id) {
+			// const id=document.getElementById('mmi').value
+			Swal.fire({
+				title: "Are you sure?",
+				text: "You won't be able to revert this!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, return order it!",
+				cancelButtonText: "Cancel",
+			}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						url: "/returnorder",
+						data: {
 
-// const ids=document.getElementById('mmi').value
-  Swal.fire({
-	title: "Are you sure?",
-	text: "You won't be able to revert this!",
-	icon: "warning",
-	showCancelButton: true,
-	confirmButtonColor: "#3085d6",
-	cancelButtonColor: "#d33",
-	confirmButtonText: "Yes, Cancel order it!",
-	cancelButtonText: "Cancel",
-  }).then((result) => {
-	if (result.isConfirmed) {
-	  $.ajax({
-		url: "/orderdeleteuser",
-		data: {
+							id: id,
+						},
+						method: "post",
+						success: (response) => {
+							if ((response.remove = true)) {
+								location.reload();
+							}
+						},
+					});
+				}
+			});
+		}
 
-		   id:id,
-		},
-		method: "post",
-		success: (response) => {
-		  if ((response.remove = true)) {
-			location.reload();
-		  }
-		},
-	  });
-	}
-  });
-}
+		function cancelorder(id) {
+
+			// const ids=document.getElementById('mmi').value
+			Swal.fire({
+				title: "Are you sure?",
+				text: "You won't be able to revert this!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, Cancel order it!",
+				cancelButtonText: "Cancel",
+			}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						url: "/orderdeleteuser",
+						data: {
+
+							id: id,
+						},
+						method: "post",
+						success: (response) => {
+							if ((response.remove = true)) {
+								location.reload();
+							}
+						},
+					});
+				}
+			});
+		}
 
 
-		</script>
+	</script>
+
+
+	
 
 
 
 
-		<%- include('../layoutes/footer.ejs') %>
+<%- include('../layoutes/footer.ejs') %>

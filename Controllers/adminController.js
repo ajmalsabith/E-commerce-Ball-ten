@@ -56,6 +56,8 @@ const verifylogin = async (req, res) => {
             const passwordmatch = await bcrypt.compare(password, userdata.password)
             if (passwordmatch) {
                 req.session.admin_id = email
+                req.session.hidd='page-1-link'
+                req.session.limitt=6
                 res.redirect('/admin/home')
             } else {
                 res.render('login', { message: 'your email or password is incorrect ok ' })
@@ -428,6 +430,7 @@ const editeproduct = async (req, res) => {
                     await sharp('./public/users/imgs/' + req.files[i].filename)
                         .resize(300, 300).toFile('./public/users/img/' + req.files[i].filename)
                     const data = await cloudinary.uploader.upload('./public/users/img/' + req.files[i].filename)
+                   
         
                     cloudcdn.push(data.secure_url)
                 }
@@ -436,10 +439,11 @@ const editeproduct = async (req, res) => {
                 if (req.files.length != 0) {
         
         
-        
+                    req.session.edproid=false
                     const update = await product.findByIdAndUpdate({ _id: id }, { $set: { name: req.body.name, price: req.body.price, category: req.body.categoryname, discription: req.body.discription, stock: req.body.stock } })
-                    const cartup=  await cart.aggregate([{$unwint:'$product'},{$match:{productId:id}}])
-                    console.log(cartup)
+                    req.session.edproid=id
+                    console.log(req.session.edproid);
+                   
 
                     for (let i = 0; i < req.files.length; i++) {
                         const dataa = await product.findByIdAndUpdate({ _id: id }, { $push: { image: cloudcdn } })
@@ -448,9 +452,11 @@ const editeproduct = async (req, res) => {
                 }
         
                 else {
+                     req.session.edproid=false
                     const update = await product.findByIdAndUpdate({ _id: id }, { $set: { name: req.body.name, price: req.body.price, category: req.body.categoryname, discription: req.body.discription, stock: req.body.stock } })
-                    const da=  await cart.updateMany ({'product.productId':id},{$set:{'product.price':req.body.price}})
-                    console.log('suhail='+da);
+                    req.session.edproid=id
+                    console.log(req.session.edproid);
+                 
                     res.redirect('/admin/product')
                 }
 
@@ -614,8 +620,10 @@ const ordermanageget = async (req, res) => {
 
     try {
 
-
-        const orders = await order.find().populate('product.productId')
+        const stx= req.session.stx
+        const limit= req.session.limitt
+         
+        const orders = await order.find().skip(stx).limit(limit).populate('product.productId')
         const orderdatas = await order.find()
         for (let i = 0; i < orderdatas.length; i++) {
             if (new Date() > orderdatas[i].exprdateplaced && new Date() < orderdatas[i].exprdatedeliverd) {
@@ -638,11 +646,35 @@ const ordermanageget = async (req, res) => {
 
         if (orders) {
 
-            res.render('ordersadmin', { orders })
+            const total = await order.find()
+            const size= Math.ceil(total.length/req.session.limitt)
+
+            res.render('ordersadmin', { orders,size,tagId:req.session.hidd})
         }
 
     }
     catch (error) {
+        console.log(error.message);
+    }
+}
+
+const paginationad= async(req,res)=>{
+    try {
+        const page = req.query.page
+        const id = req.query.id
+        
+        req.session.hidd=id
+        req.session.stx= (page-1)*req.session.limitt
+       const stx= req.session.stx
+       const limit= req.session.limitt
+        
+      
+        const orders = await order.find().skip(stx).limit(limit).populate('product.productId')
+        const total = await order.find()
+        const size= Math.ceil(total.length/req.session.limitt)
+        res.render('ordersadmin', {orders,size,tagId:req.session.hidd})
+        
+    } catch (error) {
         console.log(error.message);
     }
 }
@@ -865,6 +897,7 @@ module.exports = {
     editcoupon,
     deletecoupon,
     ordermanageget,
+    paginationad,
     orderdelete,
 
     editstatus,

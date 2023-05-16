@@ -75,8 +75,31 @@ const loadcart = async (req, res) => {
         const session = req.session.user_id;
         const userdata = await Users.findOne({ _id: session })
         const cartData = await cart.findOne({ userId: session }).populate('product.productId')
+        const products = await product.findOne({_id:req.session.edproid})
+
+
+        try {
+            
+            const filter = { userId: req.session.user_id, "product.productId": req.session.edproid };
+            const update = { $set: { "product.$.price": products.price } };
+          
+            const result = await cart.updateOne(filter, update);
+          
+            if (result.modifiedCount === 1) {
+              console.log("Update successful!");
+            } else {
+              console.log("No document matched the query.");
+            }
+          } catch (error) {
+            console.error("Error occurred during the update:", error);
+          }
+          
+
+
+       
 
         const relproduct = await product.find()
+      
 
         if (session) {
             if (cartData) {
@@ -90,6 +113,8 @@ const loadcart = async (req, res) => {
                     const STD = 45
                     CPRODUT = product
                     TOTAL = Total
+
+                
 
                     res.render('cart', { customer, relproduct, userdata, product, Total, userId, session, userdata, STD })
                 } else {

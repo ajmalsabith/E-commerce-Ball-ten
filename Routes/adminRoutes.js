@@ -53,6 +53,7 @@ admin_router.get('/editcoupon',authadmin.is_login,adminController.geteditcoupon)
 admin_router.post('/editcoupon',adminController.editcoupon)
 admin_router.get('/deleteco',adminController.deletecoupon)
 admin_router.get('/orderadmin',authadmin.is_login,adminController.ordermanageget)
+admin_router.get('/pagination',authadmin.is_login,adminController.paginationad)
 admin_router.get('/orderdelete',adminController.orderdelete)
 
 admin_router.post('/vieworder',adminController.editstatus)
