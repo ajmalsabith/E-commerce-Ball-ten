@@ -4,6 +4,7 @@ const Category = require('../models/CategoryModel')
 const product = require('../models/product Model')
 const order = require('../models/orderModel')
 const coupon = require('../models/couponModel')
+const cart = require('../models/CategoryModel')
 const { log } = require('npmlog')
 const { name } = require('ejs')
 const mongoose = require('mongoose')
@@ -13,12 +14,12 @@ const cloudinary = require('cloudinary').v2
 
 
 cloudinary.config({
-    cloud_name:'dn22c933z',
+    cloud_name: 'dn22c933z',
     api_key: '251717459957397',
-    api_secret:'UgNJSOhGxYyjM2lQBqhpChI1lt4',
+    api_secret: 'UgNJSOhGxYyjM2lQBqhpChI1lt4',
     secure: true,
-  });
-  
+});
+
 
 const { updateOne } = require('../models/CartModel')
 
@@ -45,10 +46,10 @@ const verifylogin = async (req, res) => {
         const password = req.body.password;
         console.log(password);
 
-        
+
 
         const userdata = await Users.findOne({ is_admin: 1 })
-        
+
         console.log(userdata);
 
         if (userdata.email == email) {
@@ -78,15 +79,15 @@ const gethome = async (req, res) => {
         const endOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
 
         const orderstoday = await order.find({ date: { $gte: startOfToday, $lt: endOfToday } }).count();
-       
 
-       
+
+
 
 
         const data = await Users.find().count()
         const block = await Users.find({ is_varified: 1 }).count()
-        const orders = await order.find({status:{$ne:'cancelled'}}).count()
-       
+        const orders = await order.find({ status: { $ne: 'cancelled' } }).count()
+
         const products = await product.find().count()
         const coupons = await coupon.find().count()
         const categorys = await Category.find().count()
@@ -95,7 +96,7 @@ const gethome = async (req, res) => {
         const wallet = await order.find({ peymentMethod: 'wallet' }).count()
         const online = await order.find({ peymentMethod: 'online' }).count()
         const total = await order.aggregate([
-            {$match:{status:{$ne:'cancelled'}}},
+            { $match: { status: { $ne: 'cancelled' } } },
             {
                 $group: {
                     _id: null,
@@ -152,7 +153,7 @@ const gethome = async (req, res) => {
 
 
 
-        res.render('index', { data, block,coupons, orders, productblock, products, categorys, total, orderstoday, online, cod, yearChart, wallet })
+        res.render('index', { data, block, coupons, orders, productblock, products, categorys, total, orderstoday, online, cod, yearChart, wallet })
 
     } catch (error) {
         console.log(error.message)
@@ -183,7 +184,7 @@ const findidblock = async (req, res) => {
             res.redirect('/admin/userManage')
         } else {
             const data = await Users.findByIdAndUpdate({ _id: id }, { $set: { is_varified: 1 } })
-            req.session.user_id=false      
+            req.session.user_id = false
             res.redirect('/admin/userManage')
         }
 
@@ -197,10 +198,10 @@ const findidblock = async (req, res) => {
 
 }
 
-    
+
 const adminlogout = async (req, res) => {
     try {
-        req.session.admin_id=false     
+        req.session.admin_id = false
         res.redirect('/admin/login')
 
 
@@ -226,14 +227,31 @@ const insertCategory = async (req, res) => {
         if (dataa) {
 
             res.render('addCategory', { error: 'this Category allready added' })
+
         } else {
+            if (req.body.category.trim() == '') {
+                res.render('addCategory', { error: 'please add category' })
+            } else {
+                if (req.body.category.length > 10) {
+                    res.render('addCategory', { error: 'your category length is too much' })
+                } else {
 
-            const newcategory = new Category({
 
-                name: req.body.category
+                    const newcategory = new Category({
 
-            })
-            const data = await newcategory.save()
+                        name: req.body.category
+
+                    })
+                    const data = await newcategory.save()
+                    if (data.name.trim() == '') {
+
+                    }
+
+                }
+            }
+
+
+
             res.render('addCategory', { message: 'category added' })
 
         }
@@ -260,24 +278,33 @@ const editecategory = async (req, res) => {
     try {
         const id = req.query.id
 
-       
-        
-        const category = await Category.findOne({_id:id})
-        const neww=category.name
-        const dataa = await Category.findOne({name:req.body.category})
+
+
+        const category = await Category.findOne({ _id: id })
+        const neww = category.name
+        const dataa = await Category.findOne({ name: req.body.category })
         console.log(dataa);
 
+
+
+
         if (dataa) {
-            res.render('editcategory',{ category,error: 'this Category allready added'})
+            res.render('editcategory', { category, error: 'this Category allready added' })
         } else {
+            if (req.body.category.trim() == '') {
+                res.render('editcategory', { category, error: 'please update' })
+            } else {
+                const ar = req.body.category.length
+                if (ar > 10) {
+                    res.render('editcategory', { category, error: 'your category length is too much' })
+                } else {
+                    const data = await Category.findByIdAndUpdate({ _id: id }, { $set: { name: req.body.category } })
+                    if (data) {
+                        res.redirect('/admin/Category')
+                    }
+                }
 
-
-console.log('89898');
-            const data = await Category.findByIdAndUpdate({ _id: id }, { $set: { name: req.body.category } })
-            if(data){
-                res.redirect('/admin/Category')
             }
-          
         }
     } catch (error) {
         console.log(error.message)
@@ -314,32 +341,42 @@ const getproduct = async (req, res) => {
 
 const insertproduct = async (req, res) => {
     try {
-       let cloudcdn=[]
+        let cloudcdn = []
         const image = []
-        for (let i = 0; i < req.files.length; i++) {
-            image[i] = req.files[i].filename
-           await sharp('./public/users/imgs/' + req.files[i].filename)
-            .resize(300, 300).toFile('./public/users/img/' + req.files[i].filename)
-             const data= await cloudinary.uploader.upload('./public/users/img/'+req.files[i].filename)
-             
-            cloudcdn.push(data.secure_url)
+        const  category= await Category.find()
+
+        if(req.body.name.trim() ==''||req.body.price.trim() ==''||req.body.discription.trim() =='' ){
+            res.render("addproduct",{category,message:"please fill form"})
+        }else{
+            if(req.body.price>0){
+                for (let i = 0; i < req.files.length; i++) {
+                    image[i] = req.files[i].filename
+                    await sharp('./public/users/imgs/' + req.files[i].filename)
+                        .resize(300, 300).toFile('./public/users/img/' + req.files[i].filename)
+                    const data = await cloudinary.uploader.upload('./public/users/img/' + req.files[i].filename)
+        
+                    cloudcdn.push(data.secure_url)
+                }
+        
+        
+                const newproduct = new product({
+        
+                    name: req.body.name,
+                    price: req.body.price,
+                    category: req.body.categoryname,
+                    image: cloudcdn,
+                    discription: req.body.discription,
+                    stock: req.body.stock,
+                    is_block: true
+                })
+                await newproduct.save()
+        
+                res.redirect('/admin/product')
+            }else{
+            res.render("addproduct",{category,message:"please enter correct price"})
+            }
         }
-
-
-        const newproduct = new product({
-
-            name: req.body.name,
-            price: req.body.price,
-            category: req.body.categoryname,
-            image: cloudcdn,
-            discription: req.body.discription,
-            stock: req.body.stock,
-            is_block: true
-        })
-        await newproduct.save()
-
-        res.redirect('/admin/product')
-
+       
     } catch (error) {
         console.log(error.message)
     }
@@ -374,34 +411,55 @@ const geteditproduct = async (req, res) => {
 
 const editeproduct = async (req, res) => {
     try {
+        const  category= await Category.find()
         const id = req.query.id
-        let cloudcdn=[]
-        const image = []
-        for (let i = 0; i < req.files.length; i++) {
-            image[i] = req.files[i].filename
-            await sharp('./public/users/imgs/' + req.files[i].filename)
-            .resize(300, 300).toFile('./public/users/img/' + req.files[i].filename)
-             const data= await cloudinary.uploader.upload('./public/users/img/'+req.files[i].filename)
-             
-            cloudcdn.push(data.secure_url)
-        }
+        const data = await product.findById({ _id: id })
+       
+      
 
+        if(req.body.name.trim() ==''||req.body.price.trim() ==''||req.body.discription.trim() =='' ){
+            res.render("editproduct",{product:data,category,message:"please fill form"})
+        }else{
+            if(req.body.price>0){
+                let cloudcdn = []
+                const image = []
+                for (let i = 0; i < req.files.length; i++) {
+                    image[i] = req.files[i].filename
+                    await sharp('./public/users/imgs/' + req.files[i].filename)
+                        .resize(300, 300).toFile('./public/users/img/' + req.files[i].filename)
+                    const data = await cloudinary.uploader.upload('./public/users/img/' + req.files[i].filename)
+        
+                    cloudcdn.push(data.secure_url)
+                }
+        
+        
+                if (req.files.length != 0) {
+        
+        
+        
+                    const update = await product.findByIdAndUpdate({ _id: id }, { $set: { name: req.body.name, price: req.body.price, category: req.body.categoryname, discription: req.body.discription, stock: req.body.stock } })
+                    const cartup=  await cart.aggregate([{$unwint:'$product'},{$match:{productId:id}}])
+                    console.log(cartup)
 
-        if (req.files.length != 0) {
+                    for (let i = 0; i < req.files.length; i++) {
+                        const dataa = await product.findByIdAndUpdate({ _id: id }, { $push: { image: cloudcdn } })
+                    }
+                    res.redirect('/admin/product')
+                }
+        
+                else {
+                    const update = await product.findByIdAndUpdate({ _id: id }, { $set: { name: req.body.name, price: req.body.price, category: req.body.categoryname, discription: req.body.discription, stock: req.body.stock } })
+                    const da=  await cart.updateMany ({'product.productId':id},{$set:{'product.price':req.body.price}})
+                    console.log('suhail='+da);
+                    res.redirect('/admin/product')
+                }
 
-
-
-            const update = await product.findByIdAndUpdate({ _id: id }, { $set: { name: req.body.name, price: req.body.price, category: req.body.categoryname, discription: req.body.discription, stock: req.body.stock } })
-            for (let i = 0; i < req.files.length; i++) {
-                const dataa = await product.findByIdAndUpdate({ _id: id }, { $push: { image: cloudcdn } })
+            }else{
+                res.render("editproduct",{product:data,category,message:"please correct enter price"})
             }
-            res.redirect('/admin/product')
-        }
 
-        else {
-            const update = await product.findByIdAndUpdate({ _id: id }, { $set: { name: req.body.name, price: req.body.price, category: req.body.categoryname, discription: req.body.discription, stock: req.body.stock } })
-            res.redirect('/admin/product')
         }
+        
 
     }
 
@@ -464,21 +522,29 @@ const getaddcoupon = async (req, res) => {
 const insertcoupon = async (req, res) => {
     try {
 
-        const newcoupons = new coupon({
+        if(req.body.name.trim()=='' ||req.body.discount.trim()=='' ||req.body.date.trim()=='' ||req.body.cartamount.trim()=='' ||req.body.limit.trim()==''){
+            res.render('addcoupon',{message:'please fill form'})
+        }else{
 
-            couponcode: req.body.name,
-            discount: req.body.discount,
-            expiredate: req.body.date,
-            purchaceamount: req.body.cartamount,
-            limit: req.body.limit,
-            status: true,
+            const newcoupons = new coupon({
 
-        })
-        const data = await newcoupons.save()
-
-        if (data) {
-            res.redirect('/admin/coupon')
+                couponcode: req.body.name,
+                discount: req.body.discount,
+                expiredate: req.body.date,
+                purchaceamount: req.body.cartamount,
+                limit: req.body.limit,
+                status: true,
+    
+            })
+            const data = await newcoupons.save()
+    
+            if (data) {
+                res.redirect('/admin/coupon')
+            }
+            
         }
+
+    
 
 
     } catch (error) {
@@ -513,11 +579,18 @@ const editcoupon = async (req, res) => {
     try {
 
         const id = req.query.id
+        const data = await coupon.findOne({ _id: id })
+        if(req.body.name.trim()=='' ||req.body.discount.trim()=='' ||req.body.date.trim()=='' ||req.body.cartamount.trim()=='' ||req.body.limit.trim()==''){
+            res.render('editcoupon',{data,message:'please fill form'})
+        }else{
 
-        const update = await coupon.updateOne({ _id: id }, { $set: { couponcode: req.body.name, discount: req.body.discount, expiredate: req.body.date, purchaceamount: req.body.cartamount, limit: req.body.limit } })
-        if (update) {
-            res.redirect('/admin/coupon')
+            const update = await coupon.updateOne({ _id: id }, { $set: { couponcode: req.body.name, discount: req.body.discount, expiredate: req.body.date, purchaceamount: req.body.cartamount, limit: req.body.limit } })
+            if (update) {
+                res.redirect('/admin/coupon')
+            }
         }
+        
+
 
 
     } catch (error) {
@@ -544,19 +617,19 @@ const ordermanageget = async (req, res) => {
 
         const orders = await order.find().populate('product.productId')
         const orderdatas = await order.find()
-        for(let i =0;i<orderdatas.length;i++){
-            if(new Date()>orderdatas[i].exprdateplaced && new Date()<orderdatas[i].exprdatedeliverd){
+        for (let i = 0; i < orderdatas.length; i++) {
+            if (new Date() > orderdatas[i].exprdateplaced && new Date() < orderdatas[i].exprdatedeliverd) {
                 console.log('shipped');
-                await order.updateOne({status:'placed'},{$set:{status:'shipped'}})
-            }else if(new Date()>orderdatas[i].exprdatedeliverd){
+                await order.updateOne({ status: 'placed' }, { $set: { status: 'shipped' } })
+            } else if (new Date() > orderdatas[i].exprdatedeliverd) {
                 console.log('deliverd');
-                await order.updateOne({status:'shipped'},{$set:{status:'deliverd'}})
-            }else{
+                await order.updateOne({ status: 'shipped' }, { $set: { status: 'deliverd' } })
+            } else {
                 console.log('placed');
-                await order.updateOne({status:null},{$set:{status:'placed'}})
+                await order.updateOne({ status: null }, { $set: { status: 'placed' } })
             }
 
-            
+
         }
 
 

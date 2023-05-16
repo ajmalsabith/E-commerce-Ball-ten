@@ -75,6 +75,7 @@ const loadcart = async (req, res) => {
         const session = req.session.user_id;
         const userdata = await Users.findOne({ _id: session })
         const cartData = await cart.findOne({ userId: session }).populate('product.productId')
+
         const relproduct = await product.find()
 
         if (session) {

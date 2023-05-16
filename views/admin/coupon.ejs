@@ -31,6 +31,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                           <% if(data.length>0){ %>
                             <% for(let i=0;i<data.length;i++){ %>
                                 <tr class="text-gray-700 dark:text-gray-400">
 
@@ -98,6 +99,11 @@
                                     </td>
                                 </tr>
                                 <%}%>
+                          <% }else{%>
+
+                            <span style="color:rgb(215, 25, 25);">no one coupon </span>
+
+                          <%}%>
                         </tbody>
                     </table>
                 </div>
