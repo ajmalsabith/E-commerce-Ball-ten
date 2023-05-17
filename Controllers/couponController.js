@@ -1,10 +1,5 @@
 
 const mongoose = require('mongoose')
-const cart = require('../models/CartModel')
-const Users = require('../models/userModel')
-const product = require('../models/product Model')
-const address = require('../models/addressModel')
-const order = require('../models/orderModel')
 const { log } = require('npmlog')
 const coupon = require('../models/couponModel')
 
@@ -18,14 +13,14 @@ const couponaddinguser = async (req, res) => {
     try {
         const code = req.body.coupon;
         req.session.code = req.body.coupon
-        console.log(req.session.code + 'rashid');
+      
 
         const amount = req.body.amount
         const carttotal= req.body.carttotal
        
-        console.log(amount + 'aju');
+      
         const userExist = await coupon.findOne({ couponcode: code, user: { $in: [req.session.user_id] } });
-        console.log(userExist);
+      
         if (userExist) {
             res.json({ user: true });
         } else {
@@ -70,7 +65,7 @@ const couponaddinguser = async (req, res) => {
 const returncoupon = async (req, res) => {
     try {
 
-        console.log('99999=8888');
+     
 
         const totalamount = req.body.totalamount
         const paidamount = req.body.paidamount

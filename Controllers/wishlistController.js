@@ -13,7 +13,7 @@ const addwhishlist = async (req, res) => {
 
 
     const proid = new mongoose.Types.ObjectId(req.query.id)
-    console.log(proid)
+   
     const userid = req.session.user_id
     const userdata = await Users.findOne({ _id: userid })
     const prodata = await product.findOne({ _id: proid })
@@ -77,7 +77,7 @@ const getwishlist = async (req, res) => {
 
         if (prodata) {
             if(prodata.product.length>0){
-                console.log('ajmalsabith444');
+             
                 res.render('add-to-wishlist', { prodata: prodata})
             }else{
                 res.render('emtywishlist', { error: 'no one product added whishlist' })

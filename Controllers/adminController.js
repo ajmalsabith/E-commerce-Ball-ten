@@ -4,7 +4,6 @@ const Category = require('../models/CategoryModel')
 const product = require('../models/product Model')
 const order = require('../models/orderModel')
 const coupon = require('../models/couponModel')
-const cart = require('../models/CategoryModel')
 const { log } = require('npmlog')
 const { name } = require('ejs')
 const mongoose = require('mongoose')
@@ -42,15 +41,10 @@ const getlogin = async (req, res) => {
 const verifylogin = async (req, res) => {
     try {
         const email = req.body.email;
-        console.log(email);
         const password = req.body.password;
-        console.log(password);
-
-
-
         const userdata = await Users.findOne({ is_admin: 1 })
 
-        console.log(userdata);
+     
 
         if (userdata.email == email) {
             const passwordmatch = await bcrypt.compare(password, userdata.password)
@@ -285,11 +279,6 @@ const editecategory = async (req, res) => {
         const category = await Category.findOne({ _id: id })
         const neww = category.name
         const dataa = await Category.findOne({ name: req.body.category })
-        console.log(dataa);
-
-
-
-
         if (dataa) {
             res.render('editcategory', { category, error: 'this Category allready added' })
         } else {
@@ -442,7 +431,6 @@ const editeproduct = async (req, res) => {
                     req.session.edproid=false
                     const update = await product.findByIdAndUpdate({ _id: id }, { $set: { name: req.body.name, price: req.body.price, category: req.body.categoryname, discription: req.body.discription, stock: req.body.stock } })
                     req.session.edproid=id
-                    console.log(req.session.edproid);
                    
 
                     for (let i = 0; i < req.files.length; i++) {
@@ -455,7 +443,6 @@ const editeproduct = async (req, res) => {
                      req.session.edproid=false
                     const update = await product.findByIdAndUpdate({ _id: id }, { $set: { name: req.body.name, price: req.body.price, category: req.body.categoryname, discription: req.body.discription, stock: req.body.stock } })
                     req.session.edproid=id
-                    console.log(req.session.edproid);
                  
                     res.redirect('/admin/product')
                 }
@@ -627,21 +614,18 @@ const ordermanageget = async (req, res) => {
         const orderdatas = await order.find()
         for (let i = 0; i < orderdatas.length; i++) {
             if (new Date() > orderdatas[i].exprdateplaced && new Date() < orderdatas[i].exprdatedeliverd) {
-                console.log('shipped');
+               
                 await order.updateOne({ status: 'placed' }, { $set: { status: 'shipped' } })
             } else if (new Date() > orderdatas[i].exprdatedeliverd) {
-                console.log('deliverd');
+            
                 await order.updateOne({ status: 'shipped' }, { $set: { status: 'deliverd' } })
             } else {
-                console.log('placed');
+               
                 await order.updateOne({ status: null }, { $set: { status: 'placed' } })
             }
 
 
         }
-
-
-        console.log(orderdatas);
 
 
         if (orders) {
@@ -697,8 +681,6 @@ const editstatus = async (req, res) => {
     try {
         const id = req.body.id
         const status = req.body.status
-        console.log(status);
-        console.log(id);
         const status1 = await order.findByIdAndUpdate({ _id: id }, { $set: { status: status } })
         if (status1) {
             res.redirect('/admin/vieworder?id=' + id)

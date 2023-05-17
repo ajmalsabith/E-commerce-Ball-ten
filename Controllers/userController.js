@@ -6,7 +6,6 @@ const { updateOne } = require('../models/userModel')
 const session = require('express-session')
 const product = require('../models/product Model')
 const { log } = require('npmlog')
-const wishlist = require('../models/wishlistmodel')
 const mongoose = require('mongoose')
 const address = require('../models/addressModel')
 const cart = require('../models/CartModel')
@@ -75,7 +74,7 @@ const insertuser = async (req, res) => {
 
 
 
-            console.log(email)
+           
             const spassword = await securePassword(req.body.password)
 
             const user = new Users({
@@ -90,7 +89,7 @@ const insertuser = async (req, res) => {
 
             })
             temp = req.body.email
-            console.log(temp)
+           
             const userdata = await user.save()
 
 
@@ -209,7 +208,7 @@ const compareotp = async (req, res) => {
     try {
         if (otp == req.body.otp) {
             const id = req.query.id
-            console.log(id+'ajmal');
+           
             const data = await Users.findByIdAndUpdate({ _id: id }, { $set: { is_block: 1} })
             if(data){
                 res.redirect('/login')
@@ -362,9 +361,9 @@ const productee = async (req, res) => {
         const id = req.query.id
  
         const not = await review.find({ productId: id, userId: { $ne: session } });
-        console.log(not);
+  
         const userc= await review.find({userId:session,productId:id})
-        // console.log(userc);
+      
        
         const count= await review.find({productId:id}).count()    
         const data = await product.findOne({ _id: id })
@@ -393,7 +392,7 @@ const womenee = async (req, res) => {
         const value2 = parseInt(req.session.value2)
 
         if (req.session.category) {
-            console.log('100')
+          
             if (req.session.sort && req.session.value1 && req.session.value2) {
 
                 const data = await product.find({ category: req.session.category, price: { $gte: value1, $lte: value2 } }).sort({ price: req.session.sort }).skip(req.session.stx).limit(req.session.limit)
@@ -401,7 +400,7 @@ const womenee = async (req, res) => {
                 const size= Math.ceil(total.length/req.session.limit)
                 res.render('women', { dataa: data ,tagId:req.session.hid,size})
 
-                console.log('200')
+               
                 req.session.sort = null
                 req.session.value1 = null
                 req.session.value2 = null
@@ -412,7 +411,7 @@ const womenee = async (req, res) => {
 
             }
             else if (req.session.sort == null && req.session.value1 && req.session.value2) {
-                console.log('300')
+              
 
                 const data = await product.find({ category: req.session.category, price: { $gte: value1, $lte: value2 } }).skip(req.session.stx).limit(req.session.limit)
                 const total = await product.find({ category: req.session.category, price: { $gte: value1, $lte: value2 } })
@@ -428,7 +427,7 @@ const womenee = async (req, res) => {
 
             }
             else if (req.session.sort && req.session.value1 == null && req.session.value2 == null) {
-                console.log('400');
+               
                 const data = await product.find({ category: req.session.category }).sort({ price: req.session.sort }).skip(req.session.stx).limit(req.session.limit)
                 const total = await product.find({ category: req.session.category })
                 const size= Math.ceil(total.length/req.session.limit)
@@ -502,7 +501,7 @@ const womenee = async (req, res) => {
                 const data = await product.find().skip(req.session.stx).limit(req.session.limit)
                 const total = await product.find()
                 const size= Math.ceil(total.length/req.session.limit)
-                console.log(req.session.limit);
+
                 res.render('women', { dataa: data,tagId:req.session.hid,size })
                 req.session.limit= null
                 req.session.page= null
@@ -543,11 +542,7 @@ const pagination = async(req,res)=>{
        
        req.session.hid=id
        req.session.stx= (page-1)*req.session.limit
-       console.log(req.session.limit);
-       console.log( req.session.stx);
        res.redirect('/women')
-    //    const products = await product.find().skip(stx).limit(limit) 
-    //    res.render('women',{dataa:products})
     } catch (error) {
         console.log(error.message);
     }
@@ -585,7 +580,6 @@ const verifyemail = async (req, res) => {
         const email = req.body.email;
         const password = req.body.password;
         const userdata = await Users.findOne({ email: email })
-        console.log(userdata)
         if (userdata) {
 
             // req.session.userid=userdata._id

@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
-const cart = require('../models/CartModel')
 const Users = require('../models/userModel')
-const product = require('../models/product Model')
 const address = require('../models/addressModel')
 const { log } = require('npmlog')
 const session = require('express-session')
@@ -24,7 +22,7 @@ const insertaddress = async (req, res) => {
     const userdata = await Users.findOne({ _id: user })
     const addressdata = await address.findOne({ userId: user })
 
-    if (addressdata) {
+    if (addressdata) {  
 
         await address.updateOne({ userId: user }, {
             $push: {
@@ -87,9 +85,9 @@ const deleteaddresscheck = async (req, res) => {
 
         const id = req.query.id
         const user = req.session.user_id
-        console.log(user);
+        
         const data = await address.updateOne({ userId: user }, { $pull: { address: { _id: id } } })
-        console.log(data);
+       
         if (data) {
             res.redirect('/checkout')
 
@@ -122,11 +120,8 @@ const editaddget = async (req, res) => {
 
         const id = req.query.id
         const index = req.query.index
-
-        console.log(id);
         const user = req.session.user_id
         const data = await address.findOne({ userId: user })
-        console.log(data.address[index]);
 
         if (data) {
             res.render('editaddress', { data: data.address[index] })
@@ -143,7 +138,6 @@ const editaddress = async (req, res) => {
     try {
 
         const index = req.query.index
-        console.log(index);
         const data = await address.updateOne({ userId: req.session.user_id }, {
             $set: {
                 [`address.${index}`]: {

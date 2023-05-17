@@ -124,10 +124,10 @@
                     </table>
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <div class="block-27">
+                            <div class="  block-27">
                            <ul>
                              <% for(let i=1;i<=size;i++){ %>
-                              <li  id="page-<%=i%>-link" ><a style="color: antiquewhite;"  href="/admin/pagination?page=<%=i%>&id=page-<%=i%>-link"><span>( <%=i%> )</span></a></li>
+                                <a style="color: antiquewhite;"  href="/admin/pagination?page=<%=i%>&id=page-<%=i%>-link"><span style="border: solid 3px white; margin: 8px; " > <%=i%> </span></a>
                               
                               <%}%>
                               <input type="hidden" id="hlt" value="<%=tagId%>"  >

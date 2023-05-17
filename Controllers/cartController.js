@@ -2,10 +2,7 @@ const mongoose = require('mongoose')
 const cart = require('../models/CartModel')
 const Users = require('../models/userModel')
 const product = require('../models/product Model')
-const address = require('../models/addressModel')
-const order = require('../models/orderModel')
 const { log } = require('npmlog')
-const coupon = require('../models/couponModel')
 const session = require('express-session')
 const Razorpay = require('razorpay')
 const status = require('statuses')
@@ -78,21 +75,13 @@ const loadcart = async (req, res) => {
         const products = await product.findOne({_id:req.session.edproid})
 
 
-        try {
             
             const filter = { userId: req.session.user_id, "product.productId": req.session.edproid };
             const update = { $set: { "product.$.price": products.price } };
           
             const result = await cart.updateOne(filter, update);
           
-            if (result.modifiedCount === 1) {
-              console.log("Update successful!");
-            } else {
-              console.log("No document matched the query.");
-            }
-          } catch (error) {
-            console.error("Error occurred during the update:", error);
-          }
+         
           
 
 

@@ -2,8 +2,6 @@
 const mongoose = require('mongoose')
 const cart = require('../models/CartModel')
 const Users = require('../models/userModel')
-const product = require('../models/product Model')
-const address = require('../models/addressModel')
 const order = require('../models/orderModel')
 const { log } = require('npmlog')
 const coupon = require('../models/couponModel')
@@ -31,7 +29,6 @@ const ordercomplete = async (req, res) => {
  
         let totalorder=req.body.totalamount
         let peyment = req.body.peyment
-        console.log(peyment);
         const cartdata = await cart.findOne({ userId: req.session.user_id })
         const product = cartdata.product
 
@@ -45,7 +42,7 @@ const ordercomplete = async (req, res) => {
         if (peyment === undefined) {
             peyment = 'wallet'
         }
-        console.log(peyment);
+       
       
        
 
@@ -127,7 +124,6 @@ const ordercomplete = async (req, res) => {
 
 
         } else {
-            console.log(status + '333');
             const orderid = orderData._id
             const totalamount = orderData.paidamount
             var options = {
@@ -149,27 +145,17 @@ const ordercomplete = async (req, res) => {
 const verifyOnlinePayment = async (req, res) => {
     try {
 
-
-        console.log("helo world");
-        // const totalPrice = req.body.amount2;
-        // const total = req.body.amount;
-        // const wal = totalPrice - total;
         const details = (req.body)
-        console.log(details.amount+'sabiyhjja');
         const crypto = require('crypto');
         let hmac = crypto.createHmac('sha256', 'EbxvveBkpnXF4xiIb1TJz3Ip');
 
         hmac.update(details.payment.razorpay_order_id + '|' + details.payment.razorpay_payment_id)
 
         hmac = hmac.digest('hex');
-        console.log(hmac);
-        console.log('111111');
-
-        console.log(details.payment.razorpay_signature);
 
         if (hmac == details.payment.razorpay_signature) {
 
-            console.log('test444');
+         
 
 
             const code = req.session.code
@@ -213,7 +199,6 @@ const cancelorder= async(req,res)=>{
     try {
 
        const id= req.body.id
-       console.log(id+'salman');
        const userdata= await Users.findOne({_id:req.session.user_id})
        await order.updateOne({_id:id},{$set:{status:'cancelled'}})
        const orderdata= await order.findOne({_id:id})
