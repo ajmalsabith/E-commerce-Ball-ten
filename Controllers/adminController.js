@@ -519,22 +519,28 @@ const insertcoupon = async (req, res) => {
             res.render('addcoupon',{message:'please fill form'})
         }else{
 
-            const newcoupons = new coupon({
+            if(req.body.discount>0 && req.body.cartamount>0 && req.body.limit>0){
+                const newcoupons = new coupon({
 
-                couponcode: req.body.name,
-                discount: req.body.discount,
-                expiredate: req.body.date,
-                purchaceamount: req.body.cartamount,
-                limit: req.body.limit,
-                status: true,
-    
-            })
-            const data = await newcoupons.save()
-    
-            if (data) {
-                res.redirect('/admin/coupon')
+                    couponcode: req.body.name,
+                    discount: req.body.discount,
+                    expiredate: req.body.date,
+                    purchaceamount: req.body.cartamount,
+                    limit: req.body.limit,
+                    status: true,
+        
+                })
+                const data = await newcoupons.save()
+        
+                if (data) {
+                    res.redirect('/admin/coupon')
+                }
+                
+            }else{
+                res.render('addcoupon',{message:'please correct form'})
             }
-            
+
+         
         }
 
     
@@ -576,11 +582,17 @@ const editcoupon = async (req, res) => {
         if(req.body.name.trim()=='' ||req.body.discount.trim()=='' ||req.body.date.trim()=='' ||req.body.cartamount.trim()=='' ||req.body.limit.trim()==''){
             res.render('editcoupon',{data,message:'please fill form'})
         }else{
-
-            const update = await coupon.updateOne({ _id: id }, { $set: { couponcode: req.body.name, discount: req.body.discount, expiredate: req.body.date, purchaceamount: req.body.cartamount, limit: req.body.limit } })
-            if (update) {
-                res.redirect('/admin/coupon')
+            if(req.body.discount>0 && req.body.cartamount>0 &&  req.body.limit>0){
+                console.log('8989');
+                const update = await coupon.updateOne({ _id: id }, { $set: { couponcode: req.body.name, discount: req.body.discount, expiredate: req.body.date, purchaceamount: req.body.cartamount, limit: req.body.limit } })
+                if (update) {
+                    res.redirect('/admin/coupon')
+                }
+            }else{
+                res.render('editcoupon',{data,message:'please correct form'})
             }
+
+          
         }
         
 
