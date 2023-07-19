@@ -76,16 +76,10 @@ const loadcart = async (req, res) => {
 
 
             
-            const filter = { userId: req.session.user_id, "product.productId": req.session.edproid };
-            const update = { $set: { "product.$.price": products.price } };
+            // const filter = { userId: req.session.user_id, "product.productId": req.session.edproid };
+            // const update = { $set: { "product.$.price": products.price } };
           
-            const result = await cart.updateOne(filter, update);
-          
-         
-          
-
-
-       
+            // const result = await cart.updateOne(filter, update);
 
         const relproduct = await product.find()
       

@@ -132,6 +132,7 @@ const ordercomplete = async (req, res) => {
                 receipt: "" + orderid
             }
             instance.orders.create(options, function (err, order) {
+                console.log(order);
                 res.json({ order });
             })
         }
